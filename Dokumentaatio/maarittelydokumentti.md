@@ -1,0 +1,2 @@
+MiinaharvanRatkaisja ratkaisee Ohjelmoinnin harjoitustyössä tehdyn Miinaharavan generoimia pelilautoja mikäli mahdollista. En teidä vielä millä algoritmeillä ja tietorakenteilla ongelmaa ratkaisen.
+Ohjelma Generoi itsensä sisällä aina uuden pelilaudan käynnistettäessä.
