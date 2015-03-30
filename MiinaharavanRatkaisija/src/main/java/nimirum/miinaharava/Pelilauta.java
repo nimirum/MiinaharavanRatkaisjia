@@ -201,6 +201,19 @@ public class Pelilauta {
         }
     }
 
+    public void klikkausRuutuun(int x, int y) {
+        Ruutu ruutu = getRuutu(x, y);
+        if (!ruutu.getOnkoRuutuAvattu() && !ruutu.isOnkoRuutuLiputettu()) {
+
+            ruutu.setOnkoRuutuAvattu(true);
+            paivitaKlikatutRuudut();
+
+            if (ruutu.getViereistenMiinojenMaara() == 0) {
+                ruutu.avaaViereisetRuudut();
+            }
+        }
+    }
+
     /**
      * Laskee klikatuista ruuduista onko peli voitettu
      *
