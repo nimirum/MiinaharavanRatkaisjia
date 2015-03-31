@@ -28,7 +28,7 @@ public class MiinaharavanRatkaisija {
                 ruudut[i][j] = false;
             } //kaikki ruudut aluksi suljettu
         }
-
+        
         lauta.miinoita(x / 2, y / 2); // tekoölyn aloitusklikkaus aina keskelle, sen jälkeen tapahtuu miinoitus
 
         miinat = new boolean[x][y];
@@ -46,6 +46,11 @@ public class MiinaharavanRatkaisija {
             }
         }
     }
+
+    public Pelilauta getLauta() {
+        return lauta;
+    }
+    
 
     private void ratkaisePelia() {
         while (true) {
@@ -73,7 +78,8 @@ public class MiinaharavanRatkaisija {
             for (int j = 0; j < lauta.getY(); j++) {
                 if (viereistenMiinojenMaara[i][j] == 1) {
                     if (laskeVieressaAvaamattomienRuutujenMaara(i, j) == 1) {
-                        ruudut[i][j] = true;
+                        //merkkaa avaamaton ruutu miinaksi
+                        miinat[i][j] = true;
                         viereistenMiinojenMaara[i][j] = viereistenMiinojenMaara[i][j] - 1;
                         //eli varma miina jos muita miinoja ei merkattu
                         //Muuta ruudun tiet viereistenmiinojen määrä yhden pienemmäksi

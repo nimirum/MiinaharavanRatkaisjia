@@ -27,6 +27,8 @@ public class Kayttoliittyma implements Runnable {
     private Pelilauta miinaharava;
     private final int ruudunLeveys;
     private final int ruudunKorkeus;
+    private Piirtaja piirtoalusta;
+    private Sijainnit sijainnit;
 
     /**
      * Kayttoliittyma luo ensimmäisellä käynnistys kerralla 15x10 kokoisen
@@ -34,7 +36,7 @@ public class Kayttoliittyma implements Runnable {
      *
      */
     public Kayttoliittyma() {
-       this(15,10);
+        this(15, 10);
     }
 
     /**
@@ -45,6 +47,12 @@ public class Kayttoliittyma implements Runnable {
      */
     public Kayttoliittyma(int x, int y) {
         this.miinaharava = new Pelilauta(x, y);
+        ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
+        ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
+    }
+
+    public Kayttoliittyma(Pelilauta lauta) {
+        this.miinaharava = lauta;
         ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
         ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
     }
@@ -82,9 +90,22 @@ public class Kayttoliittyma implements Runnable {
      * @param container
      */
     public void luoKomponentit(Container container) {
-        Piirtaja piirtoalusta = new Piirtaja(miinaharava);
+        piirtoalusta = new Piirtaja(miinaharava);
         lisaaKuuntelija(piirtoalusta);
         container.add(piirtoalusta);
+    }
+
+    public void klikkaaRuutua(int x, int y, String toiminta) {
+        ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
+        for (int i = 0; i < sijainnit.tapahtumaAlueet().size(); i++) {
+            if (toiminta.equals("Klikkaus")) {
+                list.get(i).alueeseenKlikattu(x, y);
+            }
+            if(toiminta.equals("Liputus")){
+                list.get(i).alueenLiputus(x, y);
+            }
+        }
+        piirtoalusta.repaint();
     }
 
     private void lisaaKuuntelija(Piirtaja piirtaja) {
@@ -100,8 +121,8 @@ public class Kayttoliittyma implements Runnable {
     }
 
     private ArrayList luoTapahtumaAlueet() {
-        Sijainnit sijainnit = new Sijainnit(miinaharava, this);
-        ArrayList list = sijainnit.tapahtumaAlueet();
+        sijainnit = new Sijainnit(miinaharava, this);
+        ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
         return list;
     }
 
@@ -169,6 +190,5 @@ public class Kayttoliittyma implements Runnable {
         frame.setEnabled(false);
         SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
     }
-
 
 }

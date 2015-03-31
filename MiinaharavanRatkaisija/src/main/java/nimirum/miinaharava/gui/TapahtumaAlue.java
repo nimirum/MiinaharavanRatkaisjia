@@ -66,7 +66,7 @@ public class TapahtumaAlue extends Rectangle {
                 }
                 if (miinaharavainen.onkoPeliPaattynyt()) {
                   //  miinaharavainen.gameOver("Voitto");
-                   // kayttoliittyma.ennatyksenTallentaminen();
+                    // kayttoliittyma.ennatyksenTallentaminen();
                 }
                 if (ruutu.getOnkoRuudussaMiina()) {
                     ruutu.setKlikattuMiina(true);
@@ -80,7 +80,6 @@ public class TapahtumaAlue extends Rectangle {
     private boolean onkoKlikkausAlueella(int x, int y) {
         return (this.x + ruutu.getRuudunLeveys() > x && this.x < x && this.y + ruutu.getRuudunLeveys() > y && this.y < y);
     }
-
 
     /**
      * Liputtaa halutun ruudun(jos sallittua), joka on parametreina saaduissa

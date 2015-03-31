@@ -11,7 +11,8 @@ public class Main {
     
       public static void main(String[] args) {
           System.out.println("Toimii");
-          SwingUtilities.invokeLater((Runnable) new Kayttoliittyma());
+          MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija();
+          SwingUtilities.invokeLater((Runnable) new Kayttoliittyma(ratkaisija.getLauta()));
       }
     
 }

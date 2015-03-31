@@ -33,7 +33,7 @@ public class Sijainnit {
      * @return Lista tapahtuma-alueista
      */
     public ArrayList tapahtumaAlueet() {
-        ArrayList list = new ArrayList();
+        ArrayList<TapahtumaAlue> list = new ArrayList();
         for (int i = 0; i < miinaharava.getX() * ruudunLeveys; i = i + ruudunLeveys) {
             for (int j = 0; j < miinaharava.getY() * ruudunKorkeus; j = j + ruudunKorkeus) {
                 TapahtumaAlue alue = new TapahtumaAlue(i, j, miinaharava.getRuutu(i / ruudunLeveys, j / ruudunKorkeus), miinaharava, kayttoliittyma);
