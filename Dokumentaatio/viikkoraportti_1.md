@@ -1,0 +1,7 @@
+#Ensimmäinen viikkoraportti
+
+##Aiheen valinta
+Valitsin aiheekseni Miinaharavan ratkaisevan algoritmin. Ensimmäisellä viikolla siirsin aikaisemmin tehdystä ohjelmoinnin harjoitustyöstä tarvittavan miinaharavan toiminnallisuuden ja käyttöliittymän. Enimmäkseen aikaa meni aiheen toteuttamisen perehtymiseen ja itse miinaharvan pelaamiseen ja ratkaisutapojen pohtimiseen. Algoritmin toteuttamisen aloittaminen tuntui vaikealta kun ei tiennyt mistä aloittaa. Suurin osa siirroista on helposti laskettavia, mutta saa nähdä mitä matkan varrella keksin vaikeampiin kohtien varalle. Tarkoituksena ratkaista miinaharavaa niin pitkälle kuin mahdollista ilman arvaamista. Algoritmin toteutuksen pohtimiseen meni turhankin paljon aikaa. Internetistä löytyi erilaisia toteuksia matriisien laskemisesta erilaisiin omiin viritelmiin. Päädyin lopulta toteuttamaan algoritmia samalla tavalla kuin itse pelaan miinaharavaa enkä ota mallia muiden ihmisten toteutuksista. Ratkaisijan toiminnallisuus pitäisi yhdistää vielä graafiseen käyttöliittymään. Ratkaisijan teko ei ole edistynyt muuta kuin pohtimalla algoritmin toimintaa ja sen vaatimia metodeja. 
+
+##Suunnitelma
+Tärkeimpien metodien toteutuksesta jo vahva mielikuva. Pitäisi aloittaa myös ArrayListin toteuttamista itse sekä testausta.
