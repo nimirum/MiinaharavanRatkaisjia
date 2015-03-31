@@ -49,7 +49,7 @@ public class MiinaharavanRatkaisija {
 
     private void ratkaisePelia() {
         while (true) {
-            etsiYkkosenKulmat();
+            etsiVarmatYkkosenVieressaOlevatMiinat();
 
         }
     }
@@ -67,18 +67,32 @@ public class MiinaharavanRatkaisija {
 
     }
 
-    private void etsiYkkosenKulmat() {
+    private void etsiVarmatYkkosenVieressaOlevatMiinat() {
+        paivitaTiedotPelikentasta();
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
                 if (viereistenMiinojenMaara[i][j] == 1) {
-                    laskeVieressaAvaamattomienRuutujenMaara(i, j);
+                    if (laskeVieressaAvaamattomienRuutujenMaara(i, j) == 1) {
+                        ruudut[i][j] = true;
+                        viereistenMiinojenMaara[i][j] = viereistenMiinojenMaara[i][j] - 1;
+                        //eli varma miina jos muita miinoja ei merkattu
+                        //Muuta ruudun tiet viereistenmiinojen määrä yhden pienemmäksi
+                    }
                 }
             }
         }
     }
 
-    private void laskeVieressaAvaamattomienRuutujenMaara(int x, int y) {
- //vertaa tiedettyjen ruutujen miinojen määrään
+    private int laskeVieressaAvaamattomienRuutujenMaara(int x, int y) {
+        //vertaa tiedettyjen ruutujen miinojen määrään
+        int avattujenRuutujenMaara = 0;
+        for (Ruutu ruutu : lauta.getRuutu(x, y).getViereisetRuudut()) {
+            if (ruutu.getOnkoRuutuAvattu() == true) {
+                avattujenRuutujenMaara++;
+            }
+
+        }
+        return lauta.getRuutu(x, y).getViereisetRuudut().size() - avattujenRuutujenMaara;
     }
 
 //    private void viereisetRuudut() {

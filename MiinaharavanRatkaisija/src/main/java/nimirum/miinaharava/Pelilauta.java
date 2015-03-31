@@ -16,6 +16,7 @@ public class Pelilauta {
     private int miinojenMaara;
     private final Ruutu pelilauta[][];
     private int klikatutRuudut = 0;
+    private boolean miinoitettu = false;
 
     /**
      * Muodostaa pelilaudan johon kuuluu x*y määrä ruutuja
@@ -103,7 +104,14 @@ public class Pelilauta {
             }
         }
         laskeNumerot();
+        miinoitettu = true;
     }
+
+    public boolean isMiinoitettu() {
+        return miinoitettu;
+    }
+    
+    
 
     private boolean viereisetRuudutEiMiinoitetaTarkitus(int x, int y, Ruutu ruutu) {
         for (Ruutu ruutuinen : ruutu.getViereisetRuudut()) {
