@@ -42,7 +42,7 @@ public class Piirtaja extends JPanel {
     }
 
     /**
-     * Piirtää kaikki pelilaudan ruudut kuvina
+     * Piirtää kaikki pelilaudan ruudut .png kuvina
      *
      * @param g Graphics
      */

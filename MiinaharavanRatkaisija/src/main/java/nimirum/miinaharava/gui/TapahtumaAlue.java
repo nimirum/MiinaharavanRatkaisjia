@@ -12,7 +12,7 @@ import nimirum.miinaharava.Ruutu;
  */
 public class TapahtumaAlue extends Rectangle {
 
-    private Kayttoliittyma kayttoliittyma;
+    private final Kayttoliittyma kayttoliittyma;
     private final Pelilauta miinaharavainen;
     private final Ruutu ruutu;
     private final int x;
@@ -77,6 +77,10 @@ public class TapahtumaAlue extends Rectangle {
         }
     }
 
+    /**
+     * Avaa parametrina annetun ruudun
+     * @param ruutu
+     */
     public void alueeseenKlikattu(Ruutu ruutu) {
         System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
         if (ruutu.isOnkoRuutuLiputettu() == false) {
@@ -126,8 +130,11 @@ public class TapahtumaAlue extends Rectangle {
         }
     }
 
-    public void alueenLiputus(Ruutu ruutu) {
-        
+    /**
+     * Liputtaa parametrina annetun ruudun
+     * @param ruutu
+     */
+    public void alueenLiputus(Ruutu ruutu) {    
         System.out.println("Liputus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
         if (!ruutu.getOnkoRuutuAvattu()) {
             if (ruutu.isOnkoRuutuLiputettu()) {

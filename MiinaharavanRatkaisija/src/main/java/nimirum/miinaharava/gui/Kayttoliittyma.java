@@ -27,16 +27,15 @@ import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 public class Kayttoliittyma implements Runnable {
 
     private JFrame frame;
-    private Pelilauta miinaharava;
+    private final Pelilauta miinaharava;
     private final int ruudunLeveys;
     private final int ruudunKorkeus;
     private Piirtaja piirtoalusta;
-    private Sijainnit sijainnit;
-    private RatkaisijanKomentaja komentaja;
+    private final Sijainnit sijainnit;
+    private final RatkaisijanKomentaja komentaja;
 
     /**
-     * Kayttoliittyma luo ensimmäisellä käynnistys kerralla 15x10 kokoisen
-     * Miinaharavan pelin
+     * Kayttoliittyma luo 10x10 kokoisen Miinaharavan pelin MiinaharvanRatkaisijalla
      *
      */
     public Kayttoliittyma() {
@@ -47,24 +46,6 @@ public class Kayttoliittyma implements Runnable {
         ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
         ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
         sijainnit = new Sijainnit(miinaharava, this);
-    }
-
-    /**
-     * Käyttöliittymä luo parametrien kokoisen Miinaharava pelin
-     *
-     * @param x Pelilaudan korkeus
-     * @param y Pelilaudan leveys
-     */
-    public Kayttoliittyma(int x, int y) {
-        this.miinaharava = new Pelilauta(x, y);
-        ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
-        ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
-    }
-
-    public Kayttoliittyma(Pelilauta lauta) {
-        this.miinaharava = lauta;
-        ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
-        ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
     }
 
     @Override
@@ -117,6 +98,10 @@ public class Kayttoliittyma implements Runnable {
         container.add(piirtoalusta);
     }
 
+    /**
+     * Klikkaa parametrina annettua ruutua
+     * @param ruutu
+     */
     public void klikkaaRuutua(Ruutu ruutu) {
         ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
         for (TapahtumaAlue tapahtumaAlue : list) {
@@ -147,24 +132,14 @@ public class Kayttoliittyma implements Runnable {
         frame.setJMenuBar(valikko);
 
         JMenuItem uusiPeli = new JMenuItem("Uusi peli");
-        //JMenuItem ennatykset = new JMenuItem("Ennätykset");
-        //JMenuItem vaihdaKokoa = new JMenuItem("Asetukset");
         valikko.add(uusiPeli);
-        //valikko.add(vaihdaKokoa);
-        //valikko.add(ennatykset);
 
         NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
         uusiPeli.addActionListener(kuuntelija);
-        //vaihdaKokoa.addActionListener(kuuntelija);
-        //ennatykset.addActionListener(kuuntelija);
     }
-
+    
     public JFrame getFrame() {
         return frame;
-    }
-
-    public Pelilauta getMiinaharava() {
-        return miinaharava;
     }
 
     /**
@@ -173,13 +148,13 @@ public class Kayttoliittyma implements Runnable {
      * @param x
      * @param y
      */
-    public void uusiPeli(int x, int y) {
-        this.miinaharava = new Pelilauta(x, y);
-        Container c = frame.getContentPane();
-        c.removeAll();
-        luoKomponentit(c);
-        frame.setVisible(true);
-    }
+//    public void uusiPeli(int x, int y) {
+//        this.miinaharava = new Pelilauta(x, y);
+//        Container c = frame.getContentPane();
+//        c.removeAll();
+//        luoKomponentit(c);
+//        frame.setVisible(true);
+//    }
 
     private void setIconImage() {
         BufferedImage miinaRuutu = null;
@@ -202,9 +177,9 @@ public class Kayttoliittyma implements Runnable {
     /**
      * "Asetukset" nappulan komento joka avaa kokoa kysyvän ikkunan
      */
-    public void kysyKokoa() {
+ //   public void kysyKokoa() {
 //        frame.setEnabled(false);
 //        SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
-    }
+ //   }
 
 }
