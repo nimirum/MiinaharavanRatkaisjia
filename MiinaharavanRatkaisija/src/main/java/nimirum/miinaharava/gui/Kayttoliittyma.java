@@ -5,6 +5,8 @@ import nimirum.miinaharava.gui.kuuntelijat.KlikkaustenKuuntelija;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -12,9 +14,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-
 import javax.swing.*;
 import nimirum.miinaharava.Pelilauta;
+import nimirum.miinaharava.Ruutu;
+import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 
 /**
  * Luokka hallitsee käyttöliittymän ikkunoita ja käynnistää pelin
@@ -29,6 +32,7 @@ public class Kayttoliittyma implements Runnable {
     private final int ruudunKorkeus;
     private Piirtaja piirtoalusta;
     private Sijainnit sijainnit;
+    private RatkaisijanKomentaja komentaja;
 
     /**
      * Kayttoliittyma luo ensimmäisellä käynnistys kerralla 15x10 kokoisen
@@ -36,7 +40,13 @@ public class Kayttoliittyma implements Runnable {
      *
      */
     public Kayttoliittyma() {
-        this(15, 10);
+        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija();
+        komentaja = new RatkaisijanKomentaja(this, ratkaisija);
+
+        this.miinaharava = ratkaisija.getLauta();
+        ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
+        ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
+        sijainnit = new Sijainnit(miinaharava, this);
     }
 
     /**
@@ -81,7 +91,19 @@ public class Kayttoliittyma implements Runnable {
         setIconImage();
         luoValikko();
         luoKomponentit(frame.getContentPane());
+        ratkaise();
+    }
 
+    private void ratkaise() {
+        int viive = 1000; //millisekunteja
+        ActionListener taskPerformer = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                komentaja.ratkaise();
+            }
+        };
+        new Timer(viive, taskPerformer).start();
     }
 
     /**
@@ -95,21 +117,21 @@ public class Kayttoliittyma implements Runnable {
         container.add(piirtoalusta);
     }
 
-    public void klikkaaRuutua(int x, int y, String toiminta) {
+    public void klikkaaRuutua(Ruutu ruutu) {
         ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
-        for (int i = 0; i < sijainnit.tapahtumaAlueet().size(); i++) {
-            if (toiminta.equals("Klikkaus")) {
-                list.get(i).alueeseenKlikattu(x, y);
-            }
-            if(toiminta.equals("Liputus")){
-                list.get(i).alueenLiputus(x, y);
+        for (TapahtumaAlue tapahtumaAlue : list) {
+            if (!ruutu.isOnkoRuutuLiputettu()) {
+                    tapahtumaAlue.alueeseenKlikattu(ruutu);
+            //tapahtumaAlue.alueeseenKlikattu((24*(ruutu.getX()-1))+12, (24*(ruutu.getY()-1))+12);
+            } else {
+                tapahtumaAlue.alueenLiputus(ruutu);
             }
         }
         piirtoalusta.repaint();
     }
 
     private void lisaaKuuntelija(Piirtaja piirtaja) {
-        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(piirtaja, luoTapahtumaAlueet());
+        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(piirtaja, sijainnit.tapahtumaAlueet());
         piirtaja.addMouseListener(kuuntelija);
     }
 
@@ -120,27 +142,21 @@ public class Kayttoliittyma implements Runnable {
         frame.setLocation(x, y);
     }
 
-    private ArrayList luoTapahtumaAlueet() {
-        sijainnit = new Sijainnit(miinaharava, this);
-        ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
-        return list;
-    }
-
     private void luoValikko() {
         JMenuBar valikko = new JMenuBar();
         frame.setJMenuBar(valikko);
 
         JMenuItem uusiPeli = new JMenuItem("Uusi peli");
-        JMenuItem ennatykset = new JMenuItem("Ennätykset");
-        JMenuItem vaihdaKokoa = new JMenuItem("Asetukset");
+        //JMenuItem ennatykset = new JMenuItem("Ennätykset");
+        //JMenuItem vaihdaKokoa = new JMenuItem("Asetukset");
         valikko.add(uusiPeli);
-        valikko.add(vaihdaKokoa);
-        valikko.add(ennatykset);
+        //valikko.add(vaihdaKokoa);
+        //valikko.add(ennatykset);
 
         NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
         uusiPeli.addActionListener(kuuntelija);
-        vaihdaKokoa.addActionListener(kuuntelija);
-        ennatykset.addActionListener(kuuntelija);
+        //vaihdaKokoa.addActionListener(kuuntelija);
+        //ennatykset.addActionListener(kuuntelija);
     }
 
     public JFrame getFrame() {
@@ -187,8 +203,8 @@ public class Kayttoliittyma implements Runnable {
      * "Asetukset" nappulan komento joka avaa kokoa kysyvän ikkunan
      */
     public void kysyKokoa() {
-        frame.setEnabled(false);
-        SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
+//        frame.setEnabled(false);
+//        SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
     }
 
 }

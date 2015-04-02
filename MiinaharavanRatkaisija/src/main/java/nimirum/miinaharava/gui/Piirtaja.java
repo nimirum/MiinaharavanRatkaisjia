@@ -24,15 +24,15 @@ public class Piirtaja extends JPanel {
         super.setBackground(Color.white);
         this.kuvat = new KuvienLataaja();
         this.miinaharava = miinaharava;
-        int viive = 1000; //millisekunteja
-        ActionListener taskPerformer = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                repaint();
-            }
-        };
-        new Timer(viive, taskPerformer).start();
+//        int viive = 1000; //millisekunteja
+//        ActionListener taskPerformer = new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                repaint();
+//            }
+//        };
+//        new Timer(viive, taskPerformer).start();
     }
 
     @Override
