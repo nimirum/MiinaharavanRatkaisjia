@@ -51,7 +51,7 @@ public class TapahtumaAlue extends Rectangle {
             if (ruutu == null) {
                 return;
             }
-          //  System.out.println("Klikkaus:" + klikkausX + ", " + klikkausY + "ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
+            //  System.out.println("Klikkaus:" + klikkausX + ", " + klikkausY + "ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
             miinaharavainen.paivitaKlikatutRuudut();
             if (!miinaharavainen.isMiinoitettu()) {
                 miinaharavainen.miinoita(ruutu.getX(), ruutu.getY());
@@ -79,28 +79,28 @@ public class TapahtumaAlue extends Rectangle {
 
     /**
      * Avaa parametrina annetun ruudun
+     *
      * @param ruutu
      */
     public void alueeseenKlikattu(Ruutu ruutu) {
-        System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
-        if (ruutu.isOnkoRuutuLiputettu() == false) {
-            ruutu.setOnkoRuutuAvattu(true);
-            miinaharavainen.paivitaKlikatutRuudut();
-            
-            if (!miinaharavainen.isMiinoitettu()) {
-                miinaharavainen.miinoita(ruutu.getX(), ruutu.getY());
-            }
-            ruutu.setOnkoRuutuAvattu(true);
-            miinaharavainen.paivitaKlikatutRuudut();
+        if (ruutu.getX() == this.ruutu.getX() && ruutu.getY() == this.ruutu.getY()) {
+           // if (!ruutu.isOnkoRuutuLiputettu()) {
+                ruutu.setOnkoRuutuAvattu(true);
+                miinaharavainen.paivitaKlikatutRuudut();
 
-            if (ruutu.getViereistenMiinojenMaara() == 0) {
-                ruutu.avaaViereisetRuudut();
+                ruutu.setOnkoRuutuAvattu(true);
+                miinaharavainen.paivitaKlikatutRuudut();
+
+                if (ruutu.getViereistenMiinojenMaara() == 0) {
+                    ruutu.avaaViereisetRuudut();
+                }
+                if (ruutu.getOnkoRuudussaMiina()) {
+                    ruutu.setKlikattuMiina(true);
+                    System.out.println("Peli päättyi");
+                    //miinaharavainen.gameOver("Havio");
+                }
             }
-            if (ruutu.getOnkoRuudussaMiina()) {
-                ruutu.setKlikattuMiina(true);
-                //miinaharavainen.gameOver("Havio");
-            }
-        }
+        
     }
 
     private boolean onkoKlikkausAlueella(int x, int y) {
@@ -115,7 +115,7 @@ public class TapahtumaAlue extends Rectangle {
      * @param y Korkeus koordinaatti
      */
     public void alueenLiputus(int x, int y) {
-        
+
         if (onkoKlikkausAlueella(x, y)) {
             if (ruutu == null) {
                 return;
@@ -132,9 +132,10 @@ public class TapahtumaAlue extends Rectangle {
 
     /**
      * Liputtaa parametrina annetun ruudun
+     *
      * @param ruutu
      */
-    public void alueenLiputus(Ruutu ruutu) {    
+    public void alueenLiputus(Ruutu ruutu) {
         System.out.println("Liputus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
         if (!ruutu.getOnkoRuutuAvattu()) {
             if (ruutu.isOnkoRuutuLiputettu()) {

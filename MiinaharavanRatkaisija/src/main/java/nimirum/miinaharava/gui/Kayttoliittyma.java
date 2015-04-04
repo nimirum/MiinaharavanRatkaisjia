@@ -33,9 +33,11 @@ public class Kayttoliittyma implements Runnable {
     private Piirtaja piirtoalusta;
     private final Sijainnit sijainnit;
     private final RatkaisijanKomentaja komentaja;
+    private Timer timer;
 
     /**
-     * Kayttoliittyma luo 10x10 kokoisen Miinaharavan pelin MiinaharvanRatkaisijalla
+     * Kayttoliittyma luo 10x10 kokoisen Miinaharavan pelin
+     * MiinaharvanRatkaisijalla
      *
      */
     public Kayttoliittyma() {
@@ -76,15 +78,21 @@ public class Kayttoliittyma implements Runnable {
     }
 
     private void ratkaise() {
-        int viive = 1000; //millisekunteja
-        ActionListener taskPerformer = new ActionListener() {
+        int viive = 100; //millisekunteja
 
+        ActionListener taskPerformer = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 komentaja.ratkaise();
             }
         };
-        new Timer(viive, taskPerformer).start();
+        timer = new Timer(viive, taskPerformer);
+        timer.start();
+
+    }
+
+    public void stop() {
+        timer.stop();
     }
 
     /**
@@ -100,16 +108,20 @@ public class Kayttoliittyma implements Runnable {
 
     /**
      * Klikkaa parametrina annettua ruutua
+     *
      * @param ruutu
      */
     public void klikkaaRuutua(Ruutu ruutu) {
-        ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
-        for (TapahtumaAlue tapahtumaAlue : list) {
-            if (!ruutu.isOnkoRuutuLiputettu()) {
-                    tapahtumaAlue.alueeseenKlikattu(ruutu);
-            //tapahtumaAlue.alueeseenKlikattu((24*(ruutu.getX()-1))+12, (24*(ruutu.getY()-1))+12);
-            } else {
-                tapahtumaAlue.alueenLiputus(ruutu);
+        if (ruutu.getOnkoRuutuAvattu() == false) {
+            System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
+            ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
+            for (TapahtumaAlue tapahtumaAlue : list) {
+                // if (!ruutu.isOnkoRuutuLiputettu()) {
+                tapahtumaAlue.alueeseenKlikattu(ruutu);
+                //tapahtumaAlue.alueeseenKlikattu((24*(ruutu.getX()-1))+12, (24*(ruutu.getY()-1))+12);
+//            } else {
+//                tapahtumaAlue.alueenLiputus(ruutu);
+//            }
             }
         }
         piirtoalusta.repaint();
@@ -137,7 +149,7 @@ public class Kayttoliittyma implements Runnable {
         NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
         uusiPeli.addActionListener(kuuntelija);
     }
-    
+
     public JFrame getFrame() {
         return frame;
     }
@@ -155,7 +167,6 @@ public class Kayttoliittyma implements Runnable {
 //        luoKomponentit(c);
 //        frame.setVisible(true);
 //    }
-
     private void setIconImage() {
         BufferedImage miinaRuutu = null;
         try {
@@ -180,6 +191,5 @@ public class Kayttoliittyma implements Runnable {
  //   public void kysyKokoa() {
 //        frame.setEnabled(false);
 //        SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
- //   }
-
+    //   }
 }

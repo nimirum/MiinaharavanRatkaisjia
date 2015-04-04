@@ -13,6 +13,7 @@ public class RatkaisijanKomentaja {
     private final Kayttoliittyma kayttoliittyma;
     private final MiinaharavanRatkaisija miinaharavanRatkaisija;
     private boolean ekaSiirtoTehty = false;
+    private int counter =0;
 
     /**
      *
@@ -28,6 +29,9 @@ public class RatkaisijanKomentaja {
      * Ohjaa MiinaharvanRatkaisijaa tekemään siirtoja riippuen onko ensimmäinen siirto jo tehty vai ei
      */
     public void ratkaise() {
+        if(counter==5){
+          //  kayttoliittyma.stop();
+        }
         if (ekaSiirtoTehty == false) {
             ekaSiirto();
             ekaSiirtoTehty = true;
@@ -35,6 +39,8 @@ public class RatkaisijanKomentaja {
             miinaharavanRatkaisija.ratkaisePelia();
             teeYksiSiirto();
         }
+       //  miinaharavanRatkaisija.tulostaTiedot();
+         counter++;
     }
 
     /**
@@ -45,14 +51,18 @@ public class RatkaisijanKomentaja {
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
         }
+        miinaharavanRatkaisija.paivitaTiedotPelikentasta();
+        miinaharavanRatkaisija.ratkaisePelia();
     }
 
     private void teeYksiSiirto() {
+       
         Ruutu ruutu = miinaharavanRatkaisija.ratkaiseYksiSiirto();
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
         } else {
             System.out.println("Ei pysty tekemään siirtoja");
+            kayttoliittyma.stop();
         }
     }
 }

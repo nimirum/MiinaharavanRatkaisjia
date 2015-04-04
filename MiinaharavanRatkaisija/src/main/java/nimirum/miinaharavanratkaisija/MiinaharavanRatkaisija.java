@@ -16,7 +16,7 @@ public class MiinaharavanRatkaisija {
     private boolean ruudut[][]; //tieto avatuista(true) ja suljetuista(false) ruuduista
     private boolean miinat[][]; //tekoälyn laskemat paikat miinoille (true)=miina
     private int viereistenMiinojenMaara[][]; //avattujen ruutujen viereisten miinojen todellinen määrä ruuduissa
-    // private int löydettyjenViereistenMiinojenMaara[][]; //kun määrä on 0 niin kaikki ruudun ympärillä olevat ruudut on turvallsta avata
+    private int loydettyjenViereistenMiinojenMaara[][]; //kun määrä on 0 niin kaikki ruudun ympärillä olevat ruudut on turvallsta avata
     private ArrayDeque<Ruutu> jonoSiirrettavista;
 
     /**
@@ -62,6 +62,13 @@ public class MiinaharavanRatkaisija {
                 //Viereisten miinojen määriä ei vielä tiedetä, joten -1
             }
         }
+        loydettyjenViereistenMiinojenMaara = new int[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                loydettyjenViereistenMiinojenMaara[i][j] = -1;
+                //Viereisten miinojen määriä ei vielä tiedetä, joten -1
+            }
+        }
         jonoSiirrettavista = new ArrayDeque();
 
     }
@@ -81,12 +88,47 @@ public class MiinaharavanRatkaisija {
      */
     public void ratkaisePelia() {
         paivitaTiedotPelikentasta();
+        avaaNollat();
         etsiTaysinVarmatMiinat();
+        
+    }
+
+    public void tulostaTiedot() {
+        for (int j = 0; j < lauta.getX(); j++) {
+            for (int i = 0; i < lauta.getY(); i++) {
+                if (miinat[i][j] == true) {
+                    System.out.print(" x");
+                } else if (ruudut[i][j] == false) {
+                    System.out.print(" A");
+                } else {
+                    System.out.print(" " + viereistenMiinojenMaara[i][j]);
+                }
+            }
+            System.out.print("\n");
+        }
+       // tulostaRatkaisuTiedot();
+    }
+
+    public void tulostaRatkaisuTiedot() {
+        System.out.println("----");
+        for (int j = 0; j < lauta.getX(); j++) {
+            for (int i = 0; i < lauta.getY(); i++) {
+                if (miinat[i][j] == true) {
+                    System.out.print(" x");
+                } else if (ruudut[i][j] == false) {
+                    System.out.print(" A");
+                } else {
+                    System.out.print(" " + loydettyjenViereistenMiinojenMaara[i][j]);
+                }
+            }
+            System.out.print("\n");
+        }
     }
 
     public Ruutu ensimmainenSiirto() {
         lauta.miinoita(lauta.getX() / 2, lauta.getY() / 2); // tekoölyn aloitusklikkaus aina keskelle, sen jälkeen tapahtuu miinoitus
-        paivitaTiedotPelikentasta();
+//        ruudut[lauta.getX() / 2][lauta.getY() / 2] = true;
+//        paivitaTiedotPelikentasta();
         return lauta.getRuutu(lauta.getX() / 2, lauta.getY() / 2);
     }
 
@@ -96,7 +138,7 @@ public class MiinaharavanRatkaisija {
         //jos ei mahdollinen, return null;
     }
 
-    private void paivitaTiedotPelikentasta() {
+    public void paivitaTiedotPelikentasta() {
         //Käytetään vain ekalla kerralla ekan klikkauksen jälkeen
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
@@ -104,6 +146,7 @@ public class MiinaharavanRatkaisija {
                     ruudut[i][j] = true;
                     if (viereistenMiinojenMaara[i][j] == -1) {
                         viereistenMiinojenMaara[i][j] = lauta.getRuutu(i, j).getViereistenMiinojenMaara();
+                        loydettyjenViereistenMiinojenMaara[i][j] = viereistenMiinojenMaara[i][j];
                     }
                 }
             }
@@ -111,35 +154,41 @@ public class MiinaharavanRatkaisija {
     }
 
     private void etsiTaysinVarmatMiinat() {
-
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
+
                 int avaamattomatRuudut = laskeVieressaAvaamattomienRuutujenMaara(i, j);
                 if (ruudut[i][j] == true && ((viereistenMiinojenMaara[i][j] == 1 && avaamattomatRuudut == 1) || (viereistenMiinojenMaara[i][j] == 2 && avaamattomatRuudut == 2) || (viereistenMiinojenMaara[i][j] == 3 && avaamattomatRuudut == 3))) {
                     //merkkaa varmat avaamattomat ruutu miinaksi, koska ne ei voi olla mitään muutakaan
                     ArrayList<Ruutu> list = palautaAvaamattomatViereisetRuudut(i, j);
                     for (Ruutu ruutu : list) {
-                        jonoSiirrettavista.add(ruutu);
-                        miinat[ruutu.getX()][ruutu.getY()] = true;
-                        ruutu.setOnkoRuutuLiputettu(true);
-                        muutaviereisetRuutujenArvoYhdenPienemmäksi(ruutu.getX(), ruutu.getY());
-                        //Ja myös avaa ne ruudut jos arvo 0
+                        // System.out.println("Miina: " + ruutu.getX() + ", " + ruutu.getY());
+                        if (miinat[ruutu.getX()][ruutu.getY()] == false) {
+                            miinat[ruutu.getX()][ruutu.getY()] = true;
+                            ruutu.setOnkoRuutuLiputettu(true);
+                            muutaviereisetRuutujenArvoYhdenPienemmäksi(ruutu.getX(), ruutu.getY());
+                            //Ja myös avaa ne ruudut jos arvo 0
+                        }
+                        //eli varma miina jos muita miinoja ei merkattu
+                        //Muuta ruudun tieto viereistenmiinojen määrä yhden pienemmäksi
                     }
-                    //eli varma miina jos muita miinoja ei merkattu
-                    //Muuta ruudun tieto viereistenmiinojen määrä yhden pienemmäksi
                 }
             }
         }
     }
 
     private void avaaNollat() {
-        //Ei tarvita välttämättä !!!
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
-                if (viereistenMiinojenMaara[i][j] == 0 && miinat[i][j] == false) {
+                if (loydettyjenViereistenMiinojenMaara[i][j] == 0) {
+                    
                     for (Ruutu ruutu : lauta.getRuutu(i, j).getViereisetRuudut()) {
-                        ruudut[ruutu.getX()][ruutu.getY()] = true;
-                        viereistenMiinojenMaara[i][j] = lauta.getRuutu(i, j).getViereistenMiinojenMaara();
+                        if (lauta.getRuutu(ruutu.getX(), ruutu.getY()).getOnkoRuutuAvattu() == false && miinat[ruutu.getX()][ruutu.getY()] == false) {
+                            ruudut[ruutu.getX()][ruutu.getY()] = true;
+                            System.out.println("Avattu ruutu:" + ruutu.getX() + ", " + ruutu.getY());
+                            jonoSiirrettavista.add(ruutu);
+                            viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = lauta.getRuutu(ruutu.getX(), ruutu.getY()).getViereistenMiinojenMaara();
+                        }
                         //ruutu.setOnkoRuutuAvattu(true); RUUTUUN KLIKKAUS
                     }
                 }
@@ -162,7 +211,7 @@ public class MiinaharavanRatkaisija {
         //vertaa tiedettyjen ruutujen miinojen määrään
         ArrayList<Ruutu> list = new ArrayList<>();
         for (Ruutu ruutu : lauta.getRuutu(x, y).getViereisetRuudut()) {
-            if (ruutu.getOnkoRuutuAvattu() == true) {
+            if (ruutu.getOnkoRuutuAvattu() != true) {
                 list.add(ruutu);
             }
         }
@@ -172,8 +221,8 @@ public class MiinaharavanRatkaisija {
     private void muutaviereisetRuutujenArvoYhdenPienemmäksi(int x, int y) {
         ArrayList<Ruutu> list = lauta.getRuutu(x, y).getViereisetRuudut();
         for (Ruutu ruutu : list) {
-            viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] - 1;
-            if (viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] == 0 && miinat[ruutu.getX()][ruutu.getY()] == false) {
+            loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] - 1;
+            if (loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] == 0 && miinat[ruutu.getX()][ruutu.getY()] == false && ruudut[ruutu.getX()][ruutu.getY()] == false) {
                 jonoSiirrettavista.push(ruutu);
                 ruudut[ruutu.getX()][ruutu.getY()] = true;
             }
