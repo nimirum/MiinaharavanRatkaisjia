@@ -23,7 +23,7 @@ public class MiinaharavanRatkaisija {
      * 10x10 pelikenttä
      */
     public MiinaharavanRatkaisija() {
-        this(10, 10);
+        this(20, 20);
     }
 
     /**
@@ -88,9 +88,8 @@ public class MiinaharavanRatkaisija {
      */
     public void ratkaisePelia() {
         paivitaTiedotPelikentasta();
-        avaaNollat();
         etsiTaysinVarmatMiinat();
-        
+        avaaNollat();
     }
 
     public void tulostaTiedot() {
@@ -106,7 +105,7 @@ public class MiinaharavanRatkaisija {
             }
             System.out.print("\n");
         }
-       // tulostaRatkaisuTiedot();
+        tulostaRatkaisuTiedot();
     }
 
     public void tulostaRatkaisuTiedot() {
@@ -132,7 +131,11 @@ public class MiinaharavanRatkaisija {
         return lauta.getRuutu(lauta.getX() / 2, lauta.getY() / 2);
     }
 
-    public Ruutu ratkaiseYksiSiirto() {
+    /**
+     *
+     * @return
+     */
+    public Ruutu getYksiRatkaistuSiirto() {
         //if siirto mahdollinen, palauta Ruutu johon siirto tapahtuu
         return jonoSiirrettavista.poll();
         //jos ei mahdollinen, return null;
@@ -146,7 +149,7 @@ public class MiinaharavanRatkaisija {
                     ruudut[i][j] = true;
                     if (viereistenMiinojenMaara[i][j] == -1) {
                         viereistenMiinojenMaara[i][j] = lauta.getRuutu(i, j).getViereistenMiinojenMaara();
-                        loydettyjenViereistenMiinojenMaara[i][j] = viereistenMiinojenMaara[i][j];
+                        loydettyjenViereistenMiinojenMaara[i][j] = laskeLoydettyjenViereistenMiinojenMaara(i,j);
                     }
                 }
             }
@@ -158,7 +161,8 @@ public class MiinaharavanRatkaisija {
             for (int j = 0; j < lauta.getY(); j++) {
 
                 int avaamattomatRuudut = laskeVieressaAvaamattomienRuutujenMaara(i, j);
-                if (ruudut[i][j] == true && ((viereistenMiinojenMaara[i][j] == 1 && avaamattomatRuudut == 1) || (viereistenMiinojenMaara[i][j] == 2 && avaamattomatRuudut == 2) || (viereistenMiinojenMaara[i][j] == 3 && avaamattomatRuudut == 3))) {
+                int viereistenMiinojenMaaraRuudussa = viereistenMiinojenMaara[i][j];
+                if (ruudut[i][j] == true && viereistenMiinojenMaaraRuudussa == avaamattomatRuudut) {
                     //merkkaa varmat avaamattomat ruutu miinaksi, koska ne ei voi olla mitään muutakaan
                     ArrayList<Ruutu> list = palautaAvaamattomatViereisetRuudut(i, j);
                     for (Ruutu ruutu : list) {
@@ -166,11 +170,9 @@ public class MiinaharavanRatkaisija {
                         if (miinat[ruutu.getX()][ruutu.getY()] == false) {
                             miinat[ruutu.getX()][ruutu.getY()] = true;
                             ruutu.setOnkoRuutuLiputettu(true);
-                            muutaviereisetRuutujenArvoYhdenPienemmäksi(ruutu.getX(), ruutu.getY());
+                            korjaaViereistenRuutujenLoydettyjenMiinojenMaara(ruutu.getX(), ruutu.getY());
                             //Ja myös avaa ne ruudut jos arvo 0
                         }
-                        //eli varma miina jos muita miinoja ei merkattu
-                        //Muuta ruudun tieto viereistenmiinojen määrä yhden pienemmäksi
                     }
                 }
             }
@@ -181,13 +183,14 @@ public class MiinaharavanRatkaisija {
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
                 if (loydettyjenViereistenMiinojenMaara[i][j] == 0) {
-                    
+
                     for (Ruutu ruutu : lauta.getRuutu(i, j).getViereisetRuudut()) {
-                        if (lauta.getRuutu(ruutu.getX(), ruutu.getY()).getOnkoRuutuAvattu() == false && miinat[ruutu.getX()][ruutu.getY()] == false) {
+                        if (lauta.getRuutu(ruutu.getX(), ruutu.getY()).getOnkoRuutuAvattu() == false && miinat[ruutu.getX()][ruutu.getY()] == false &&  ruudut[ruutu.getX()][ruutu.getY()] == false) {
                             ruudut[ruutu.getX()][ruutu.getY()] = true;
-                            System.out.println("Avattu ruutu:" + ruutu.getX() + ", " + ruutu.getY());
+                            //System.out.println("Avattu ruutu:" + ruutu.getX() + ", " + ruutu.getY());
                             jonoSiirrettavista.add(ruutu);
                             viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = lauta.getRuutu(ruutu.getX(), ruutu.getY()).getViereistenMiinojenMaara();
+                            loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = laskeLoydettyjenViereistenMiinojenMaara(ruutu.getX(), ruutu.getY());
                         }
                         //ruutu.setOnkoRuutuAvattu(true); RUUTUUN KLIKKAUS
                     }
@@ -218,14 +221,27 @@ public class MiinaharavanRatkaisija {
         return list;
     }
 
-    private void muutaviereisetRuutujenArvoYhdenPienemmäksi(int x, int y) {
+    private void korjaaViereistenRuutujenLoydettyjenMiinojenMaara(int x, int y) {
         ArrayList<Ruutu> list = lauta.getRuutu(x, y).getViereisetRuudut();
         for (Ruutu ruutu : list) {
-            loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] - 1;
+            loydettyjenViereistenMiinojenMaara[x][y] = laskeLoydettyjenViereistenMiinojenMaara(x, y);
+            loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = laskeLoydettyjenViereistenMiinojenMaara(ruutu.getX(), ruutu.getY());
             if (loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] == 0 && miinat[ruutu.getX()][ruutu.getY()] == false && ruudut[ruutu.getX()][ruutu.getY()] == false) {
                 jonoSiirrettavista.push(ruutu);
                 ruudut[ruutu.getX()][ruutu.getY()] = true;
+                viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = lauta.getRuutu(ruutu.getX(), ruutu.getY()).getViereistenMiinojenMaara();
             }
         }
+        paivitaTiedotPelikentasta();
+    }
+
+    private int laskeLoydettyjenViereistenMiinojenMaara(int x, int y) {
+        int miinojenMaara = 0;
+        for (Ruutu ruutu : lauta.getRuutu(x, y).getViereisetRuudut()) {
+            if (miinat[ruutu.getX()][ruutu.getY()] == true) {
+                miinojenMaara++;
+            }
+        }
+        return viereistenMiinojenMaara[x][y] - miinojenMaara;
     }
 }

@@ -47,7 +47,9 @@ public class Piirtaja extends JPanel {
      * @param g Graphics
      */
     public void piirraRuudut(Graphics g) {
-
+        if(miinaharava.onkoPeliPaattynyt()){
+            piirraGameOver(g, "Voitto");
+        }
         int ruudunKoko = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
 
         for (int i = 0; i < miinaharava.getX() * ruudunKoko; i = i + ruudunKoko) {

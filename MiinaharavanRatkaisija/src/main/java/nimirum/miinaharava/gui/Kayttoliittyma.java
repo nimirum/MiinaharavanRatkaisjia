@@ -112,8 +112,7 @@ public class Kayttoliittyma implements Runnable {
      * @param ruutu
      */
     public void klikkaaRuutua(Ruutu ruutu) {
-        if (ruutu.getOnkoRuutuAvattu() == false) {
-            System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
+            //System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
             ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
             for (TapahtumaAlue tapahtumaAlue : list) {
                 // if (!ruutu.isOnkoRuutuLiputettu()) {
@@ -122,7 +121,7 @@ public class Kayttoliittyma implements Runnable {
 //            } else {
 //                tapahtumaAlue.alueenLiputus(ruutu);
 //            }
-            }
+         //   }
         }
         piirtoalusta.repaint();
     }
@@ -154,19 +153,6 @@ public class Kayttoliittyma implements Runnable {
         return frame;
     }
 
-    /**
-     * Luo uuden tyhjän Miinaharava pelin
-     *
-     * @param x
-     * @param y
-     */
-//    public void uusiPeli(int x, int y) {
-//        this.miinaharava = new Pelilauta(x, y);
-//        Container c = frame.getContentPane();
-//        c.removeAll();
-//        luoKomponentit(c);
-//        frame.setVisible(true);
-//    }
     private void setIconImage() {
         BufferedImage miinaRuutu = null;
         try {
@@ -185,11 +171,4 @@ public class Kayttoliittyma implements Runnable {
         frame.dispose();
     }
 
-    /**
-     * "Asetukset" nappulan komento joka avaa kokoa kysyvän ikkunan
-     */
- //   public void kysyKokoa() {
-//        frame.setEnabled(false);
-//        SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
-    //   }
 }
