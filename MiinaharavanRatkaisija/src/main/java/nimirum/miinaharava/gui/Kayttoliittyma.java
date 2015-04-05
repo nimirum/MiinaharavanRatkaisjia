@@ -1,7 +1,5 @@
 package nimirum.miinaharava.gui;
 
-import nimirum.miinaharava.gui.kuuntelijat.NappuloidenKuuntelija;
-import nimirum.miinaharava.gui.kuuntelijat.KlikkaustenKuuntelija;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -14,9 +12,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.Timer;
 import nimirum.miinaharava.Pelilauta;
 import nimirum.miinaharava.Ruutu;
+import nimirum.miinaharava.gui.kuuntelijat.KlikkaustenKuuntelija;
+import nimirum.miinaharava.gui.kuuntelijat.NappuloidenKuuntelija;
 import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 
 /**
@@ -27,12 +30,12 @@ import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 public class Kayttoliittyma implements Runnable {
 
     private JFrame frame;
-    private final Pelilauta miinaharava;
+    private Pelilauta miinaharava;
     private final int ruudunLeveys;
     private final int ruudunKorkeus;
     private Piirtaja piirtoalusta;
-    private final Sijainnit sijainnit;
-    private final RatkaisijanKomentaja komentaja;
+    private Sijainnit sijainnit;
+    private RatkaisijanKomentaja komentaja;
     private Timer timer;
 
     /**
@@ -74,11 +77,13 @@ public class Kayttoliittyma implements Runnable {
         setIconImage();
         luoValikko();
         luoKomponentit(frame.getContentPane());
-        ratkaise();
     }
 
-    private void ratkaise() {
-        int viive = 100; //millisekunteja
+    /**
+     * Käynnistää miinaharavan ratkaisemisen
+     */
+    public void ratkaise() {
+        int viive = 1; //millisekunteja
 
         ActionListener taskPerformer = new ActionListener() {
             @Override
@@ -91,6 +96,9 @@ public class Kayttoliittyma implements Runnable {
 
     }
 
+    /**
+     * Pysäyttää miinahararvan ratkaisemeisen.
+     */
     public void stop() {
         timer.stop();
     }
@@ -112,16 +120,16 @@ public class Kayttoliittyma implements Runnable {
      * @param ruutu
      */
     public void klikkaaRuutua(Ruutu ruutu) {
-            //System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
-            ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
-            for (TapahtumaAlue tapahtumaAlue : list) {
-                // if (!ruutu.isOnkoRuutuLiputettu()) {
-                tapahtumaAlue.alueeseenKlikattu(ruutu);
-                //tapahtumaAlue.alueeseenKlikattu((24*(ruutu.getX()-1))+12, (24*(ruutu.getY()-1))+12);
+        //System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
+        ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
+        for (TapahtumaAlue tapahtumaAlue : list) {
+            // if (!ruutu.isOnkoRuutuLiputettu()) {
+            tapahtumaAlue.alueeseenKlikattu(ruutu);
+            //tapahtumaAlue.alueeseenKlikattu((24*(ruutu.getX()-1))+12, (24*(ruutu.getY()-1))+12);
 //            } else {
 //                tapahtumaAlue.alueenLiputus(ruutu);
 //            }
-         //   }
+            //   }
         }
         piirtoalusta.repaint();
     }
@@ -143,12 +151,19 @@ public class Kayttoliittyma implements Runnable {
         frame.setJMenuBar(valikko);
 
         JMenuItem uusiPeli = new JMenuItem("Uusi peli");
+        JMenuItem ratkaise = new JMenuItem("Ratkaise peli");
         valikko.add(uusiPeli);
-
+        valikko.add(ratkaise);
+        
         NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
         uusiPeli.addActionListener(kuuntelija);
+        ratkaise.addActionListener(kuuntelija);
     }
 
+    /**
+     *
+     * @return JFrame
+     */
     public JFrame getFrame() {
         return frame;
     }
@@ -161,6 +176,23 @@ public class Kayttoliittyma implements Runnable {
             System.out.println("Kuvien lataus epäonnistui");
         }
         frame.setIconImage(miinaRuutu);
+    }
+
+    /**
+     * Luo uuden tyhjän Miinaharava pelin
+     *
+     * @param x
+     * @param y
+     */
+    public void uusiPeli(int x, int y) {
+        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija();
+        komentaja = new RatkaisijanKomentaja(this, ratkaisija);
+        this.miinaharava = ratkaisija.getLauta();
+        sijainnit = new Sijainnit(miinaharava, this);
+        Container c = frame.getContentPane();
+        c.removeAll();
+        luoKomponentit(c);
+        frame.setVisible(true);
     }
 
     /**

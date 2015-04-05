@@ -84,34 +84,34 @@ public class Pelilauta {
      * @param y
      */
     public void miinoita(int x, int y) {
-        miinojenMaara = miinojenMaaraLaskuri();
-        Ruutu ekaKlikkaus = getRuutu(x, y);
+        if (miinoitettu == false) {
+            miinojenMaara = miinojenMaaraLaskuri();
+            Ruutu ekaKlikkaus = getRuutu(x, y);
 
-        Random random = new Random();
-        int min = 0;
-        int maxX = this.x - 1;
-        int maxY = this.y - 1;
+            Random random = new Random();
+            int min = 0;
+            int maxX = this.x - 1;
+            int maxY = this.y - 1;
 
-        int laskuri = 0;
+            int laskuri = 0;
 
-        while (laskuri < miinojenMaara) {
-            int randomNumX = random.nextInt((maxX - min) + 1) + min;
-            int randomNumY = random.nextInt((maxY - min) + 1) + min;
-            Ruutu ruutu = getRuutu(randomNumX, randomNumY);
-            if (!ruutu.getOnkoRuudussaMiina() && ruutu.getX() != ekaKlikkaus.getX() && ruutu.getY() != ekaKlikkaus.getY() && viereisetRuudutEiMiinoitetaTarkitus(ruutu.getX(), ruutu.getY(), ekaKlikkaus)) {
-                ruutu.setOnkoRuudussaMiina(true);
-                laskuri++;
+            while (laskuri < miinojenMaara) {
+                int randomNumX = random.nextInt((maxX - min) + 1) + min;
+                int randomNumY = random.nextInt((maxY - min) + 1) + min;
+                Ruutu ruutu = getRuutu(randomNumX, randomNumY);
+                if (!ruutu.getOnkoRuudussaMiina() && ruutu.getX() != ekaKlikkaus.getX() && ruutu.getY() != ekaKlikkaus.getY() && viereisetRuudutEiMiinoitetaTarkitus(ruutu.getX(), ruutu.getY(), ekaKlikkaus)) {
+                    ruutu.setOnkoRuudussaMiina(true);
+                    laskuri++;
+                }
             }
+            laskeNumerot();
+            miinoitettu = true;
         }
-        laskeNumerot();
-        miinoitettu = true;
     }
 
     public boolean isMiinoitettu() {
         return miinoitettu;
     }
-    
-    
 
     private boolean viereisetRuudutEiMiinoitetaTarkitus(int x, int y, Ruutu ruutu) {
         for (Ruutu ruutuinen : ruutu.getViereisetRuudut()) {
@@ -209,6 +209,11 @@ public class Pelilauta {
         }
     }
 
+    /**
+     *
+     * @param x klikatun ruudun x koordinaatti
+     * @param y klikatun ruudun y koordinaatti
+     */
     public void klikkausRuutuun(int x, int y) {
         Ruutu ruutu = getRuutu(x, y);
         if (!ruutu.getOnkoRuutuAvattu() && !ruutu.isOnkoRuutuLiputettu()) {

@@ -4,8 +4,9 @@ import nimirum.miinaharava.Ruutu;
 import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 
 /**
- * RatkaisijanKomentaja käskee ratkaisijaa tekemään siirtoja ja välittää ratkaisijan tekemät siirrot käyttöliittymälle.
- * 
+ * RatkaisijanKomentaja käskee ratkaisijaa tekemään siirtoja ja välittää
+ * ratkaisijan tekemät siirrot käyttöliittymälle.
+ *
  * @author nimirum
  */
 public class RatkaisijanKomentaja {
@@ -25,7 +26,8 @@ public class RatkaisijanKomentaja {
     }
 
     /**
-     * Ohjaa MiinaharvanRatkaisijaa tekemään siirtoja riippuen onko ensimmäinen siirto jo tehty vai ei
+     * Ohjaa MiinaharvanRatkaisijaa tekemään siirtoja riippuen onko ensimmäinen
+     * siirto jo tehty vai ei
      */
     public void ratkaise() {
         if (ekaSiirtoTehty == false) {
@@ -35,7 +37,7 @@ public class RatkaisijanKomentaja {
             miinaharavanRatkaisija.ratkaisePelia();
             teeYksiSiirto();
         }
-         
+
     }
 
     /**
@@ -51,14 +53,17 @@ public class RatkaisijanKomentaja {
     }
 
     private void teeYksiSiirto() {
-       
         Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
         } else {
-            System.out.println("Ei pysty tekemään siirtoja");
+            if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
+                System.out.println("Peli ratkaistu");
+            } else {
+                System.out.println("Ei pysty tekemään siirtoja");
+            }
             kayttoliittyma.stop();
-            miinaharavanRatkaisija.tulostaTiedot();
+            // miinaharavanRatkaisija.tulostaTiedot();
         }
     }
 }

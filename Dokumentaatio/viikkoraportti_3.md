@@ -1,0 +1,4 @@
+#Viikkoraportti 3
+
+#Toteutus
+MiinaharavanRatkaisija pystyy ratkaisemaan tällä hetkellä melkein aina miinaharavan jos sen pystyy ratkaisemaan ilman arvausta. Nurkat tuottavat yleensä ongelmia ja niihin muodostuu 50/50 arvaus tilanteita miinojen sijainneista. Algoritmin pitäisi kuitenkin vielä osata laskea myös sellaisia tilanteita että missä on yksi ratkaisu on löydettävissä, sillä ainoassa ratkaisussa viereisten miinojen määrät pitäisivät paikkansa. Ratkaisijan testausta pitäisi tehdä sekä omien tarvittavien tietorakenteiden aloittamista eli ArrayList ja ArrayDeque. Käyttöliittymän testaus testeillä ei olisi mielekästä tai tarpeellista. Sen testaus tapahtuu helposti itse kokeilemalla koska toimintoja on muutenkin vähän.

@@ -30,11 +30,10 @@ public class NappuloidenKuuntelija implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Uusi peli")) {
-            //kayttoliittyma.uusiPeli(this.miinaharava.getX(), this.miinaharava.getY());
-            System.out.println("Uuden pelin käynnistys - ei toimi vielä");
+            kayttoliittyma.uusiPeli(this.miinaharava.getX(), this.miinaharava.getY());
         }
-        if (e.getActionCommand().equals("Asetukset")) {
-           // kayttoliittyma.kysyKokoa();
+        if (e.getActionCommand().equals("Ratkaise peli")) {
+           kayttoliittyma.ratkaise();
         }
         if (e.getActionCommand().equals("Ennätykset")) {
          //   kayttoliittyma.avaaEnnatykset();
