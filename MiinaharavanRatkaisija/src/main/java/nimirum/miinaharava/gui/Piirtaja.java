@@ -87,7 +87,6 @@ public class Piirtaja extends JPanel {
     }
 
     private void piirraGameOver(Graphics g, String tilanne) {
-
         int leveys = (int) (0.3 * miinaharava.getX() * miinaharava.getRuutu(0, 0).getRuudunKorkeus());
         int korkeus = miinaharava.getY() * miinaharava.getRuutu(0, 0).getRuudunKorkeus();
 
