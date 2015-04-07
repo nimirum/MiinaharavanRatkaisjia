@@ -6,7 +6,8 @@ import nimirum.miinaharava.Pelilauta;
 import nimirum.miinaharava.Ruutu;
 
 /**
- * MiinaharavanRatkaisija ratkaisee pelilaudan siitä löytyvien tietojen perusteella mikäli mahdollista ilman arvaamista.
+ * MiinaharavanRatkaisija ratkaisee pelilaudan siitä löytyvien tietojen
+ * perusteella mikäli mahdollista ilman arvaamista.
  *
  * @author nimirum
  */
@@ -24,7 +25,7 @@ public class MiinaharavanRatkaisija {
      * 10x10 pelikenttä
      */
     public MiinaharavanRatkaisija() {
-        this(20, 20);
+        this(10, 10);
     }
 
     /**
@@ -34,7 +35,9 @@ public class MiinaharavanRatkaisija {
      * Miinat[][], missä on tieto miinojen paikoista (true = ruudussa on
      * algoritmin mukaan miina) ViereistenMiinojenaara[][], missä on ruudun
      * tieto vieressä olevien miinojen määrästä
-     * loydettyjenViereistenMiinojenMaara[][] ylläpitää tietoa ruudun vierestä löydettyjen miinojen määrästä, kun määrä on 0 niin kaikki ruudun ympärillä olevat ruudut on turvallista avata
+     * loydettyjenViereistenMiinojenMaara[][] ylläpitää tietoa ruudun vierestä
+     * löydettyjen miinojen määrästä, kun määrä on 0 niin kaikki ruudun
+     * ympärillä olevat ruudut on turvallista avata
      *
      * @param x Pelilaudan leveys
      * @param y Pelilaudan korkeus
@@ -132,20 +135,39 @@ public class MiinaharavanRatkaisija {
         }
     }
 
+    public String[][] ratkaisuTiedotTaulukossa() {
+        String[][] tiedot = new String[lauta.getX()][lauta.getY()];
+        for (int i = 0; i < lauta.getX(); i++) {
+            for (int j = 0; j < lauta.getY(); j++) {
+                if (miinat[i][j] == true) {
+                    tiedot[i][j] = "x";
+                } else if (ruudut[i][j] == false) {
+                    tiedot[i][j] = "A";
+                } else {
+                    tiedot[i][j] = "" + viereistenMiinojenMaara[i][j];
+                }
+            }
+        }
+        return tiedot;
+    }
+
     /**
-     * Tekee pelilaudan ensimmäisen siiron, mikä on aina keskelle (Random aloituskohta voisi olla myös mahdollinen)
-     * Pelilauta miinoitetaan ensimmäisellä siirrolla
-     * 
+     * Tekee pelilaudan ensimmäisen siiron, mikä on aina keskelle (Random
+     * aloituskohta voisi olla myös mahdollinen) Pelilauta miinoitetaan
+     * ensimmäisellä siirrolla
+     *
      * @return
      */
     public Ruutu ensimmainenSiirto() {
-        lauta.miinoita(lauta.getX() / 2, lauta.getY() / 2); 
+        lauta.miinoita(lauta.getX() / 2, lauta.getY() / 2);
         ruudut[lauta.getX() / 2][lauta.getY() / 2] = true;
+       viereistenMiinojenMaara[lauta.getX() / 2][lauta.getY() / 2] = lauta.getRuutu(lauta.getX()/2, lauta.getY()/2).getViereistenMiinojenMaara();
         return lauta.getRuutu(lauta.getX() / 2, lauta.getY() / 2);
     }
 
     /**
      * Palauttaa jonosta yhden ratkaistun siirron
+     *
      * @return
      */
     public Ruutu getYksiRatkaistuSiirto() {
@@ -164,14 +186,14 @@ public class MiinaharavanRatkaisija {
                     ruudut[i][j] = true;
                     if (viereistenMiinojenMaara[i][j] == -1) {
                         viereistenMiinojenMaara[i][j] = lauta.getRuutu(i, j).getViereistenMiinojenMaara();
-                        loydettyjenViereistenMiinojenMaara[i][j] = laskeLoydettyjenViereistenMiinojenMaara(i,j);
+                        loydettyjenViereistenMiinojenMaara[i][j] = laskeLoydettyjenViereistenMiinojenMaara(i, j);
                     }
                 }
             }
         }
     }
 
-    private void etsiTaysinVarmatMiinat() {
+    void etsiTaysinVarmatMiinat() {
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
 
@@ -200,7 +222,7 @@ public class MiinaharavanRatkaisija {
                 if (loydettyjenViereistenMiinojenMaara[i][j] == 0) {
 
                     for (Ruutu ruutu : lauta.getRuutu(i, j).getViereisetRuudut()) {
-                        if (lauta.getRuutu(ruutu.getX(), ruutu.getY()).getOnkoRuutuAvattu() == false && miinat[ruutu.getX()][ruutu.getY()] == false &&  ruudut[ruutu.getX()][ruutu.getY()] == false) {
+                        if (lauta.getRuutu(ruutu.getX(), ruutu.getY()).getOnkoRuutuAvattu() == false && miinat[ruutu.getX()][ruutu.getY()] == false && ruudut[ruutu.getX()][ruutu.getY()] == false) {
                             ruudut[ruutu.getX()][ruutu.getY()] = true;
                             //System.out.println("Avattu ruutu:" + ruutu.getX() + ", " + ruutu.getY());
                             jonoSiirrettavista.add(ruutu);
@@ -244,7 +266,6 @@ public class MiinaharavanRatkaisija {
                 viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = lauta.getRuutu(ruutu.getX(), ruutu.getY()).getViereistenMiinojenMaara();
             }
         }
-        paivitaTiedotPelikentasta();
     }
 
     private int laskeLoydettyjenViereistenMiinojenMaara(int x, int y) {

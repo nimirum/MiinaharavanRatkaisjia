@@ -13,7 +13,6 @@ public class RatkaisijanKomentaja {
 
     private final Kayttoliittyma kayttoliittyma;
     private final MiinaharavanRatkaisija miinaharavanRatkaisija;
-    private boolean ekaSiirtoTehty = false;
 
     /**
      *
@@ -30,9 +29,8 @@ public class RatkaisijanKomentaja {
      * siirto jo tehty vai ei
      */
     public void ratkaise() {
-        if (ekaSiirtoTehty == false) {
+        if (miinaharavanRatkaisija.getLauta().isMiinoitettu() == false) {
             ekaSiirto();
-            ekaSiirtoTehty = true;
         } else {
             miinaharavanRatkaisija.ratkaisePelia();
             teeYksiSiirto();
@@ -48,7 +46,6 @@ public class RatkaisijanKomentaja {
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
         }
-        miinaharavanRatkaisija.paivitaTiedotPelikentasta();
         miinaharavanRatkaisija.ratkaisePelia();
     }
 

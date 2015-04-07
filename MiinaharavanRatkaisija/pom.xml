@@ -53,7 +53,15 @@
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
+				<artifactId>cobertura-maven-plugin</artifactId>			
+				<configuration>
+					<instrumentation>
+						<includes>
+							<include>nimirum.miinaharavanratkaisija/*.class</include>
+							<include>nimirum.miinaharavanratkaisija.dataStructures/*.class</include>
+						</includes>
+					</instrumentation>
+				</configuration>
 				<version>2.6</version>
 			</plugin>
 			<plugin>
@@ -63,9 +71,11 @@
 					<configuration>
 					<targetClasses>
 						<param>nimirum.miinaharavanratkaisija.*</param>
+						<param>nimirum.miinaharavanratkaisija.dataStructures.*</param>
 					</targetClasses>
 					<targetTests>
 						<param>nimirum.miinaharavanratkaisija.*</param>
+						<param>nimirum.miinaharavanratkaisija.dataStructures.*</param>
 					</targetTests>
 				</configuration>
 			</plugin>
