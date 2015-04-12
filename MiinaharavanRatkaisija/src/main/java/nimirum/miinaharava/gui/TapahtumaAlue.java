@@ -1,8 +1,8 @@
 package nimirum.miinaharava.gui;
 
 import java.awt.Rectangle;
-import nimirum.miinaharava.Pelilauta;
-import nimirum.miinaharava.Ruutu;
+import nimirum.miinaharava.logiikka.Pelilauta;
+import nimirum.miinaharava.logiikka.Ruutu;
 
 /**
  * Toiminnallisia ruudun muotoisia tapahtumaalueita jotka yhdistetään

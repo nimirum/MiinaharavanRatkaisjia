@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import nimirum.miinaharava.Pelilauta;
-import nimirum.miinaharava.Ruutu;
+import nimirum.miinaharava.logiikka.Pelilauta;
+import nimirum.miinaharava.logiikka.Ruutu;
 
 /**
  * Luokka piirtää pelikentän ja sen komponentit eli ruudut

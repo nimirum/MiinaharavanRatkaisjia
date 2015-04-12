@@ -1,6 +1,6 @@
-package nimirum.miinaharava;
+package nimirum.miinaharava.logiikka;
 
-import java.util.ArrayList;
+import nimirum.miinaharavanratkaisija.dataStructures.ArrayList;
 
 /**
  * Pelilaudan ruutu, mikä voi olla miina, tyhjä tai numero, joka kertoo vieressä
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author nimirum
  */
 public class Ruutu {
-
+    
     private int viereistenMiinojenMaara = 0; //8 lähintä ruutua
     private final int x;
     private final int y;
@@ -32,19 +32,19 @@ public class Ruutu {
         this.x = x;
         this.y = y;
     }
-
+    
     public void setViereisetRuudut(ArrayList<Ruutu> list) {
         this.viereisetRuudut = list;
     }
-
+    
     public ArrayList<Ruutu> getViereisetRuudut() {
         return viereisetRuudut;
     }
-
+    
     public void setOnkoRuudussaMiina(boolean onkoMiina) {
         this.onkoMiina = onkoMiina;
     }
-
+    
     public boolean getOnkoRuutuAvattu() {
         return onkoRuutuAvattu;
     }
@@ -58,15 +58,15 @@ public class Ruutu {
     public void setOnkoRuutuAvattu(boolean onkoRuutuKlikattava) {
         this.onkoRuutuAvattu = onkoRuutuKlikattava;
     }
-
+    
     public int getX() {
         return x;
     }
-
+    
     public int getY() {
         return y;
     }
-
+    
     public boolean getOnkoRuudussaMiina() {
         return onkoMiina;
     }
@@ -76,7 +76,9 @@ public class Ruutu {
      * itse ruudussa on miina
      */
     public void laskeNumerot() {
-        for (Ruutu viereinen : getViereisetRuudut()) {
+        ArrayList<Ruutu> ruudut = getViereisetRuudut();        
+        for (int i = 0; i < ruudut.size(); i++) {
+            Ruutu viereinen = ruudut.get(i);
             if (viereinen.onkoMiina) {
                 addViereistenMiinojenMaaraa();
             }
@@ -100,11 +102,11 @@ public class Ruutu {
     public void addViereistenMiinojenMaaraa() {
         viereistenMiinojenMaara++;
     }
-
+    
     public int getViereistenMiinojenMaara() {
         return viereistenMiinojenMaara;
     }
-
+    
     public boolean isKlikattuMiina() {
         return klikattuMiina;
     }
@@ -119,15 +121,15 @@ public class Ruutu {
             this.klikattuMiina = klikattuMiina;
         }
     }
-
+    
     public int getRuudunKorkeus() {
         return ruudunKorkeus;
     }
-
+    
     public int getRuudunLeveys() {
         return ruudunLeveys;
     }
-
+    
     public boolean isOnkoRuutuLiputettu() {
         return onkoLiputettu;
     }
@@ -148,7 +150,9 @@ public class Ruutu {
      * numeroruudut
      */
     public void avaaViereisetRuudut() {
-        for (Ruutu viereinen : getViereisetRuudut()) {
+        ArrayList<Ruutu> ruudut = getViereisetRuudut(); 
+        for (int i = 0; i < ruudut.size(); i++) {
+           Ruutu viereinen = ruudut.get(i);
             if (viereinen.onkoRuutuAvattu == false) {
                 if (viereinen.getViereistenMiinojenMaara() == 0) {
                     viereinen.setOnkoRuutuAvattu(true);

@@ -2,7 +2,7 @@ package nimirum.miinaharava.gui.kuuntelijat;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import nimirum.miinaharava.Pelilauta;
+import nimirum.miinaharava.logiikka.Pelilauta;
 import nimirum.miinaharava.gui.Kayttoliittyma;
 
 /**

@@ -1,8 +1,8 @@
 package nimirum.miinaharavanratkaisija;
 
 import java.util.ArrayList;
-import nimirum.miinaharava.Pelilauta;
-import nimirum.miinaharava.Ruutu;
+import nimirum.miinaharava.logiikka.Pelilauta;
+import nimirum.miinaharava.logiikka.Ruutu;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,7 +63,7 @@ public class MiinaharavanRatkaisijaTest {
         // ratkaisija.ratkaisePelia();
         ratkaisija.paivitaTiedotPelikentasta();
         String[][] tiedot = ratkaisija.ratkaisuTiedotTaulukossa();
-        ratkaisija.tulostaTiedot();
+      //  ratkaisija.tulostaTiedot();
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
                 Ruutu ruutu = lauta.getRuutu(i, j);

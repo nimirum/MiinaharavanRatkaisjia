@@ -1,6 +1,6 @@
 package nimirum.miinaharava.gui;
 
-import nimirum.miinaharava.Ruutu;
+import nimirum.miinaharava.logiikka.Ruutu;
 import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 
 /**

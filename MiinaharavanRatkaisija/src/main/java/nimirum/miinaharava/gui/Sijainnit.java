@@ -1,7 +1,7 @@
 package nimirum.miinaharava.gui;
 
 import java.util.ArrayList;
-import nimirum.miinaharava.Pelilauta;
+import nimirum.miinaharava.logiikka.Pelilauta;
 
 /**
  * Luo Tapahtumalueet ja niiden koordinaatit

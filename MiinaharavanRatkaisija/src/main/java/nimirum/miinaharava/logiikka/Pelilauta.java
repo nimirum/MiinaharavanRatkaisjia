@@ -1,7 +1,8 @@
-package nimirum.miinaharava;
+package nimirum.miinaharava.logiikka;
 
-import java.util.ArrayList;
+
 import java.util.Random;
+import nimirum.miinaharavanratkaisija.dataStructures.ArrayList;
 
 /**
  * Muodostaa Pelilaudan, joka muodostuu ruuduista(x,y), miinoittaa ja laskee
@@ -100,7 +101,7 @@ public class Pelilauta {
                 int randomNumY = random.nextInt((maxY - min) + 1) + min;
                 Ruutu ruutu = getRuutu(randomNumX, randomNumY);
                 if (!ruutu.getOnkoRuudussaMiina() && ruutu.getX() != ekaKlikkaus.getX() && ruutu.getY() != ekaKlikkaus.getY() && viereisetRuudutEiMiinoitetaTarkitus(ruutu.getX(), ruutu.getY(), ekaKlikkaus)) {
-                    System.out.println("Miina: " + randomNumX + ", " + randomNumY);
+                   // System.out.println("Miina: " + randomNumX + ", " + randomNumY);
                     ruutu.setOnkoRuudussaMiina(true);
                     laskuri++;
                 }
@@ -124,7 +125,9 @@ public class Pelilauta {
     }
 
     private boolean viereisetRuudutEiMiinoitetaTarkitus(int x, int y, Ruutu ruutu) {
-        for (Ruutu ruutuinen : ruutu.getViereisetRuudut()) {
+        ArrayList<Ruutu> ruudut = ruutu.getViereisetRuudut();
+        for (int i = 0; i < ruudut.size(); i++) {
+            Ruutu ruutuinen = ruudut.get(i);
             if (ruutuinen.getX() == x && ruutuinen.getY() == y) {
                 return false;
             }
