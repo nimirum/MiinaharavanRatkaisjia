@@ -1,6 +1,5 @@
 package nimirum.miinaharavanratkaisija.dataStructures;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -9,18 +8,26 @@ import java.util.ListIterator;
 /**
  *
  * @author nimirum
+ * @param <Ruutu>
  */
 public class ArrayList<Ruutu> implements Collection<Ruutu>, List<Ruutu> {
 
     private Object[] list;
     private int size;
 
+    /**
+     * Luo oletuksena 8 kokoisen taulukon, koska viereisten ruutujen määrä on maksimissaan 8kpl
+     */
     public ArrayList() {
-        this(10);
+        this(8); 
     }
 
-    public ArrayList(int size) {
-        this.list = new Object[size];
+    /**
+     * ArrayList konstruktori, jossa voi valita listan koon (testausta varten..)
+     * @param capacity
+     */
+    public ArrayList(int capacity) {
+        this.list = new Object[capacity];
         this.size = 0;
     }
 
@@ -41,9 +48,6 @@ public class ArrayList<Ruutu> implements Collection<Ruutu>, List<Ruutu> {
 
     @Override
     public boolean add(Ruutu e) {
-        if (size >= list.length) {
-            list = Arrays.copyOf(list, size * 2);
-        }
         list[size] = e;
         size++;
 
@@ -63,6 +67,7 @@ public class ArrayList<Ruutu> implements Collection<Ruutu>, List<Ruutu> {
         return null;
     }
 
+    //ei tarvita
     @Override
     public boolean contains(Object o) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -147,5 +152,4 @@ public class ArrayList<Ruutu> implements Collection<Ruutu>, List<Ruutu> {
     public List<Ruutu> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }

@@ -1,5 +1,6 @@
 package nimirum.miinaharavanratkaisija.dataStructures;
 
+import nimirum.miinaharava.logiikka.Ruutu;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -34,7 +35,17 @@ public class ArrayListTest {
 
     @Test
     public void luoArrayList() {
-
+        ArrayList<Ruutu> ruudut = new ArrayList<>();
+        assertEquals(ruudut.size(), 0);
+        assertEquals(ruudut.isEmpty(), true);
+    }
+    
+    @Test
+    public void lisaysToimii(){
+        ArrayList<Ruutu> ruudut = new ArrayList<>();
+        ruudut.add(new Ruutu(1,1));
+        assertEquals(ruudut.get(0).getX(), 1);
+        assertEquals(ruudut.get(0).getY(), 1);
     }
     
 }

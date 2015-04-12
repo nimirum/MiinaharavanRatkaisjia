@@ -1,8 +1,8 @@
 package nimirum.miinaharavanratkaisija;
 
-import java.util.ArrayList;
 import nimirum.miinaharava.logiikka.Pelilauta;
 import nimirum.miinaharava.logiikka.Ruutu;
+import nimirum.miinaharavanratkaisija.dataStructures.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -83,7 +83,7 @@ public class MiinaharavanRatkaisijaTest {
     public void pelinRatkaisu() {
         ratkaisija = new MiinaharavanRatkaisija(10, 10);
        // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
-        ArrayList<Ruutu> miinat = new ArrayList();
+        ArrayList<Ruutu> miinat = new ArrayList(16);
         miinat.add(new Ruutu(9,3));
         miinat.add(new Ruutu(9,6));
         miinat.add(new Ruutu(0,4));
