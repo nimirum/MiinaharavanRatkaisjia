@@ -8,10 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author nimirum
- */
 public class ArrayListTest {
 
     public ArrayListTest() {
@@ -34,18 +30,27 @@ public class ArrayListTest {
     }
 
     @Test
-    public void luoArrayList() {
+    public void luoArrayListJaSeOnTyhja() {
         ArrayList<Ruutu> ruudut = new ArrayList<>();
         assertEquals(ruudut.size(), 0);
         assertEquals(ruudut.isEmpty(), true);
     }
-    
+
     @Test
-    public void lisaysToimii(){
+    public void lisaysToimii() {
         ArrayList<Ruutu> ruudut = new ArrayList<>();
-        ruudut.add(new Ruutu(1,1));
+        ruudut.add(new Ruutu(1, 1));
         assertEquals(ruudut.get(0).getX(), 1);
         assertEquals(ruudut.get(0).getY(), 1);
     }
-    
+
+    @Test
+    public void vaarallaIndeksillaGetReturnNull() {
+        //taulukko oletuksena 8 kokoinenn, kutsutaan indexiä 9
+        ArrayList<Ruutu> ruudut = new ArrayList<>();
+        ruudut.add(new Ruutu(1, 1));
+        assertEquals(ruudut.get(9), null);
+         assertEquals(ruudut.get(-1), null);
+    }
+
 }

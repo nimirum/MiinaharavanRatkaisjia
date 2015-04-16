@@ -120,16 +120,9 @@ public class Kayttoliittyma implements Runnable {
      * @param ruutu
      */
     public void klikkaaRuutua(Ruutu ruutu) {
-        //System.out.println("Klikkaus ruutuun: " + ruutu.getX() + " ," + ruutu.getY());
         ArrayList<TapahtumaAlue> list = sijainnit.tapahtumaAlueet();
         for (TapahtumaAlue tapahtumaAlue : list) {
-            // if (!ruutu.isOnkoRuutuLiputettu()) {
             tapahtumaAlue.alueeseenKlikattu(ruutu);
-            //tapahtumaAlue.alueeseenKlikattu((24*(ruutu.getX()-1))+12, (24*(ruutu.getY()-1))+12);
-//            } else {
-//                tapahtumaAlue.alueenLiputus(ruutu);
-//            }
-            //   }
         }
         piirtoalusta.repaint();
     }

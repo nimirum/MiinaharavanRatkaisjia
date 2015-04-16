@@ -10,10 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author nimirum
- */
 public class MiinaharavanRatkaisijaTest {
 
     private MiinaharavanRatkaisija ratkaisija;
@@ -114,7 +110,8 @@ public class MiinaharavanRatkaisijaTest {
         }
         ratkaisija.paivitaTiedotPelikentasta();
         String[][] tiedot = ratkaisija.ratkaisuTiedotTaulukossa();
-        ratkaisija.tulostaTiedot();
+        //ratkaisija.tulostaTiedot();
+        lauta.avaaKaikkiRuudut();
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
                 Ruutu ruutu = lauta.getRuutu(i, j);

@@ -227,7 +227,8 @@ public class MiinaharavanRatkaisija {
                         if (lauta.getRuutu(ruutu.getX(), ruutu.getY()).getOnkoRuutuAvattu() == false && miinat[ruutu.getX()][ruutu.getY()] == false && ruudut[ruutu.getX()][ruutu.getY()] == false) {
                             ruudut[ruutu.getX()][ruutu.getY()] = true;
                             //System.out.println("Avattu ruutu:" + ruutu.getX() + ", " + ruutu.getY());
-                            jonoSiirrettavista.push(ruutu);
+                            jonoSiirrettavista.push(ruutu); //VÄLIAIKAINEN
+                            //ruutu.setOnkoRuutuAvattu(true);
                             viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = lauta.getRuutu(ruutu.getX(), ruutu.getY()).getViereistenMiinojenMaara();
                             loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = laskeLoydettyjenViereistenMiinojenMaara(ruutu.getX(), ruutu.getY());
                         }
@@ -269,7 +270,8 @@ public class MiinaharavanRatkaisija {
             loydettyjenViereistenMiinojenMaara[x][y] = laskeLoydettyjenViereistenMiinojenMaara(x, y);
             loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = laskeLoydettyjenViereistenMiinojenMaara(ruutu.getX(), ruutu.getY());
             if (loydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] == 0 && miinat[ruutu.getX()][ruutu.getY()] == false && ruudut[ruutu.getX()][ruutu.getY()] == false) {
-                jonoSiirrettavista.push(ruutu);
+                jonoSiirrettavista.push(ruutu);// Väliaikainen
+                //ruutu.setOnkoRuutuAvattu(true);
                 ruudut[ruutu.getX()][ruutu.getY()] = true;
                 viereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = lauta.getRuutu(ruutu.getX(), ruutu.getY()).getViereistenMiinojenMaara();
             }

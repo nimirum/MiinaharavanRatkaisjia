@@ -113,8 +113,9 @@ public class Pelilauta {
 
     public void miinoita(ArrayList<Ruutu> miinat) {
         if (miinoitettu = false) {
-            for (Ruutu ruutu : miinat) {
-                ruutu.setOnkoRuudussaMiina(true);
+           // for (Ruutu ruutu : miinat) {
+             for (int i = 0; i < miinat.size(); i++) {
+                miinat.get(i).setOnkoRuudussaMiina(true);
             }
             miinoitettu = true;
         }
