@@ -35,7 +35,6 @@ public class RatkaisijanKomentaja {
             miinaharavanRatkaisija.ratkaisePelia();
             teeYksiSiirto();
         }
-
     }
 
     /**

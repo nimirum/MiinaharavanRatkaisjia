@@ -3,18 +3,21 @@ package nimirum.miinaharavanratkaisija.dataStructures;
 import nimirum.miinaharava.logiikka.Ruutu;
 
 /**
- *
+ * Itse toteutettu jono
  * @author nimirum
  */
 
 public class ArrayDeque{
 
-    //private int numElements;
     private Ruutu[] elements;
     private int size;
     private int head;
     private int tail;
 
+    /**
+     * Konstruktori, joka luo syötteen mukaisen kokoisen jonon
+     * @param capacity
+     */
     public ArrayDeque(int capacity) {
         this.elements = new Ruutu[capacity];
         size = 0;
@@ -22,10 +25,17 @@ public class ArrayDeque{
         tail = 0;
     }
 
+    /**
+     * Jono, jonka koko on 16
+     */
     public ArrayDeque() {
         this(16);
     }
 
+    /**
+     * Lisää jonon perälle uuden jäsenen
+     * @param e
+     */
     public void push(Ruutu e) {
         if (e == null) {
             throw new NullPointerException();
@@ -38,6 +48,10 @@ public class ArrayDeque{
         size++;
     }
 
+    /**
+     * Palauttaa jonossa pisimpään olleen jäsenen
+     * @return
+     */
     public Ruutu poll() {
         Ruutu result = elements[head];
         if (result == null) {
@@ -64,10 +78,18 @@ public class ArrayDeque{
         //tail = size - 1;
     }
 
+    /**
+     * Palauttaa jonon sisällä olevien jäsenien määrän
+     * @return
+     */
     public int size() {
         return size;
     }
     
+    /**
+     * Palauttaa jonon
+     * @return
+     */
     public Ruutu[] toArray(){
         return elements;
     }

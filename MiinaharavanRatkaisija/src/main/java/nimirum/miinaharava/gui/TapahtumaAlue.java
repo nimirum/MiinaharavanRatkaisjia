@@ -12,7 +12,7 @@ import nimirum.miinaharava.logiikka.Ruutu;
  */
 public class TapahtumaAlue extends Rectangle {
 
-    private final Kayttoliittyma kayttoliittyma;
+   // private final Kayttoliittyma kayttoliittyma;
     private final Pelilauta miinaharavainen;
     private final Ruutu ruutu;
     private final int x;
@@ -25,12 +25,11 @@ public class TapahtumaAlue extends Rectangle {
      * @param y Korkeus koordinaatti
      * @param ruutu Ruutu
      * @param miinaharavainen Miinaharavainen
-     * @param kayttoliittyma Käyttöliittymä
      */
-    public TapahtumaAlue(int x, int y, Ruutu ruutu, Pelilauta miinaharavainen, Kayttoliittyma kayttoliittyma) {
+    public TapahtumaAlue(int x, int y, Ruutu ruutu, Pelilauta miinaharavainen) {
         super(x, y, ruutu.getRuudunLeveys(), ruutu.getRuudunKorkeus());
         this.miinaharavainen = miinaharavainen;
-        this.kayttoliittyma = kayttoliittyma;
+        //this.kayttoliittyma = kayttoliittyma;
         this.ruutu = ruutu;
         this.x = x;
         this.y = y;

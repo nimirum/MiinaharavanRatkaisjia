@@ -113,7 +113,7 @@ public class MiinaharavanRatkaisija {
             }
             System.out.print("\n");
         }
-        tulostaRatkaisuTiedot();
+      //  tulostaRatkaisuTiedot();
     }
 
     /**
@@ -193,7 +193,7 @@ public class MiinaharavanRatkaisija {
         }
     }
 
-    void etsiTaysinVarmatMiinat() {
+    private void etsiTaysinVarmatMiinat() {
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
 

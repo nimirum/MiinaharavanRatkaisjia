@@ -1,7 +1,7 @@
 package nimirum.miinaharavanratkaisija.dataStructures;
 
 /**
- *
+ * Hyvin yksinkertainen oma toteutus ArrayListista, missä on vain kaikki tarvittavat metodit MiinaharavanRatkaisijaan
  * @author nimirum
  * @param <Ruutu>
  */
@@ -18,7 +18,7 @@ public class ArrayList<Ruutu>{
     }
 
     /**
-     * ArrayList konstruktori, jossa voi valita listan koon (testausta varten..)
+     * ArrayList konstruktori, jossa voi valita listan koon 
      * @param capacity
      */
     public ArrayList(int capacity) {
@@ -27,31 +27,31 @@ public class ArrayList<Ruutu>{
     }
 
     /**
-     *
-     * @return
+     * Palauttaa listan jäsenien määrän
+     * @return size
      */
     public int size() {
         return size;
     }
 
     /**
-     *
-     * @return
+     * Kertoo onko lista tyhjä
+     * @return boolean
      */
     public boolean isEmpty() {
         return size == 0;
     }
 
     /**
-     *
-     * @return
+     * Palauttaa listan taulukkona
+     * @return Object[]
      */
     public Object[] toArray() {
         return list;
     }
 
     /**
-     *
+     * Lisää uuden jäsenen listaan
      * @param e
      */
     public void add(Ruutu e) {
@@ -61,9 +61,9 @@ public class ArrayList<Ruutu>{
     }
 
     /**
-     *
+     * Palauttaa listan jäsenen parametrina tulleen indexin kohdalta mikäli mahdollista
      * @param index
-     * @return
+     * @return Ruutu
      */
     public Ruutu get(int index) {
         if (index < list.length && index >= 0) {
