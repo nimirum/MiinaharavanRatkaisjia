@@ -10,5 +10,4 @@ public class Main {
 //        SuorituskykyTestaaja katis = new SuorituskykyTestaaja();
 //        katis.ratkaiseKunnesRatkaistu();
     }
-
 }

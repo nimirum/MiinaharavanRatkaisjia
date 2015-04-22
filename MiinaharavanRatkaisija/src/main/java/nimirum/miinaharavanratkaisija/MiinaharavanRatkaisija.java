@@ -25,7 +25,7 @@ public class MiinaharavanRatkaisija {
      * 10x10 pelikenttä
      */
     public MiinaharavanRatkaisija() {
-        this(10, 10);
+        this(20, 20);
     }
 
     /**
