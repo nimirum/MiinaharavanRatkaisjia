@@ -33,7 +33,12 @@ public class RatkaisijanKomentaja {
             ekaSiirto();
         } else {
             miinaharavanRatkaisija.ratkaisePelia();
-            teeYksiSiirto();
+            boolean siirtoMahdollinen = teeYksiSiirto();
+            if(siirtoMahdollinen){
+                System.out.println("Etsitään 121 ja 1221 ratkaisuja");
+                miinaharavanRatkaisija.etsiLisaaRatkaisuja();
+                teeYksiSiirto();
+            }
         }
     }
 
@@ -48,18 +53,23 @@ public class RatkaisijanKomentaja {
         miinaharavanRatkaisija.ratkaisePelia();
     }
 
-    private void teeYksiSiirto() {
+    private boolean teeYksiSiirto() {
         Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
+        boolean pelinRatkaisuJumissa;
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
+            pelinRatkaisuJumissa = false;
         } else {
             if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
                 System.out.println("Peli ratkaistu");
+                pelinRatkaisuJumissa = false;
             } else {
                 System.out.println("Ei pysty tekemään siirtoja");
+                pelinRatkaisuJumissa = true;
             }
             kayttoliittyma.stop();
             // miinaharavanRatkaisija.tulostaTiedot();
         }
+        return pelinRatkaisuJumissa;
     }
 }
