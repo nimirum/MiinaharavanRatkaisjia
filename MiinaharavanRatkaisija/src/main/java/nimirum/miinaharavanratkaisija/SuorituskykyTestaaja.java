@@ -20,7 +20,7 @@ public class SuorituskykyTestaaja {
      * Konstruktori
      */
     public SuorituskykyTestaaja() {
-        this.ratkaisija = new MiinaharavanRatkaisija(40, 40);
+        this.ratkaisija = new MiinaharavanRatkaisija(100, 100);
     }
 
     /**
@@ -39,7 +39,7 @@ public class SuorituskykyTestaaja {
         }
         long elapsedTime = stop - start;
         System.out.println(elapsedTime / 1000000000.0);
-
+        System.out.println(ratkaisija.laskuri);
     }
 
     /**
