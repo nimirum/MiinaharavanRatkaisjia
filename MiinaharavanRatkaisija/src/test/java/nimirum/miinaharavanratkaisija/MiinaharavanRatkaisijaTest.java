@@ -59,14 +59,13 @@ public class MiinaharavanRatkaisijaTest {
         // ratkaisija.ratkaisePelia();
         ratkaisija.paivitaTiedotPelikentasta();
         String[][] tiedot = ratkaisija.ratkaisuTiedotTaulukossa();
-      //  ratkaisija.tulostaTiedot();
+        //  ratkaisija.tulostaTiedot();
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
                 Ruutu ruutu = lauta.getRuutu(i, j);
                 if (ruutu.isOnkoRuutuLiputettu()) {
                     assertEquals("x", tiedot[i][j]);
-                } else
-                if (!ruutu.getOnkoRuutuAvattu()) {
+                } else if (!ruutu.getOnkoRuutuAvattu()) {
                     assertEquals("A", tiedot[i][j]);
                 } else if (!ruutu.getOnkoRuudussaMiina() && ruutu.getOnkoRuutuAvattu()) {
                     assertEquals("" + ruutu.getViereistenMiinojenMaara(), tiedot[i][j]);
@@ -78,26 +77,26 @@ public class MiinaharavanRatkaisijaTest {
     @Test
     public void pelinRatkaisu() {
         ratkaisija = new MiinaharavanRatkaisija(10, 10);
-       // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
+        // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
         ArrayList<Ruutu> miinat = new ArrayList(16);
-        miinat.add(new Ruutu(9,3));
-        miinat.add(new Ruutu(9,6));
-        miinat.add(new Ruutu(0,4));
-        miinat.add(new Ruutu(7,0));
-        miinat.add(new Ruutu(1,4));
-        miinat.add(new Ruutu(2,8));
-        miinat.add(new Ruutu(6,0));
-        miinat.add(new Ruutu(2,0));
-        miinat.add(new Ruutu(7,4));
-        miinat.add(new Ruutu(3,0));
-        miinat.add(new Ruutu(4,0));
-        miinat.add(new Ruutu(3,1));
-        miinat.add(new Ruutu(1,6));
-        miinat.add(new Ruutu(7,3));
-        miinat.add(new Ruutu(0,9));
+        miinat.add(new Ruutu(9, 3));
+        miinat.add(new Ruutu(9, 6));
+        miinat.add(new Ruutu(0, 4));
+        miinat.add(new Ruutu(7, 0));
+        miinat.add(new Ruutu(1, 4));
+        miinat.add(new Ruutu(2, 8));
+        miinat.add(new Ruutu(6, 0));
+        miinat.add(new Ruutu(2, 0));
+        miinat.add(new Ruutu(7, 4));
+        miinat.add(new Ruutu(3, 0));
+        miinat.add(new Ruutu(4, 0));
+        miinat.add(new Ruutu(3, 1));
+        miinat.add(new Ruutu(1, 6));
+        miinat.add(new Ruutu(7, 3));
+        miinat.add(new Ruutu(0, 9));
         Pelilauta lauta = ratkaisija.getLauta();
         lauta.miinoita(miinat);
-        lauta.klikkausRuutuun(5,5);
+        lauta.klikkausRuutuun(5, 5);
 
         while (true) {
             ratkaisija.ratkaisePelia();
@@ -117,8 +116,7 @@ public class MiinaharavanRatkaisijaTest {
                 Ruutu ruutu = lauta.getRuutu(i, j);
                 if (ruutu.getOnkoRuudussaMiina() && ruutu.isOnkoRuutuLiputettu()) {
                     assertEquals("x", tiedot[i][j]);
-                } else
-                if (!ruutu.getOnkoRuutuAvattu()) {
+                } else if (!ruutu.getOnkoRuutuAvattu()) {
                     assertEquals("A", tiedot[i][j]);
                 } else if (!ruutu.getOnkoRuudussaMiina() && ruutu.getOnkoRuutuAvattu()) {
                     assertEquals("" + ruutu.getViereistenMiinojenMaara(), tiedot[i][j]);
@@ -126,6 +124,53 @@ public class MiinaharavanRatkaisijaTest {
             }
 
         }
+    }
+
+    @Test
+    public void ratkaisijanToimivuus121tilanteet() {
+        ratkaisija = new MiinaharavanRatkaisija(3, 3);
+        // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
+        ArrayList<Ruutu> miinat = new ArrayList(3);
+        miinat.add(new Ruutu(2, 0));
+        miinat.add(new Ruutu(2, 2));
+        Pelilauta lauta = ratkaisija.getLauta();
+        lauta.miinoita(miinat);
+        lauta.klikkausRuutuun(0, 1);
+
+        while (true) {
+            ratkaisija.etsiLisaaRatkaisuja();
+            Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
+            if (ruutu != null) {
+                lauta.klikkausRuutuun(ruutu.getX(), ruutu.getY());
+            } else {
+                break;
+            }
+        }
+        assertEquals(lauta.getRuutu(2, 1).getOnkoRuutuAvattu(), true);
+    }
+
+    @Test
+    public void ratkaisijanToimivuus1221tilanteet() {
+        ratkaisija = new MiinaharavanRatkaisija(3, 4);
+        // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
+        ArrayList<Ruutu> miinat = new ArrayList(3);
+        miinat.add(new Ruutu(2, 1));
+        miinat.add(new Ruutu(2, 2));
+        Pelilauta lauta = ratkaisija.getLauta();
+        lauta.miinoita(miinat);
+        lauta.klikkausRuutuun(0, 1);
+
+        while (true) {
+            ratkaisija.etsiLisaaRatkaisuja();
+            Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
+            if (ruutu != null) {
+                lauta.klikkausRuutuun(ruutu.getX(), ruutu.getY());
+            } else {
+                break;
+            }
+        }
+        assertEquals(lauta.getRuutu(2, 0).getOnkoRuutuAvattu(), true);
+        assertEquals(lauta.getRuutu(2, 3).getOnkoRuutuAvattu(), true);
     }
 
 }

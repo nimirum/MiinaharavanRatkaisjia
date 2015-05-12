@@ -82,7 +82,10 @@ public class TapahtumaAlue extends Rectangle {
      * @param ruutu
      */
     public void alueeseenKlikattu(Ruutu ruutu) {
-        if (ruutu.getX() == this.ruutu.getX() && ruutu.getY() == this.ruutu.getY()) {
+        if(ruutu == null){
+            System.out.println("Ruutu null");
+        }
+        else if (ruutu.getX() == this.ruutu.getX() && ruutu.getY() == this.ruutu.getY()) {
            // if (!ruutu.isOnkoRuutuLiputettu()) {
                 ruutu.setOnkoRuutuAvattu(true);
                 miinaharavainen.paivitaKlikatutRuudut();

@@ -15,12 +15,16 @@ public class SuorituskykyTestaaja {
     private boolean ratkaistu = false;
     long stop;
     long start;
+    private int x;
+    private int y;
 
     /**
      * Konstruktori
      */
-    public SuorituskykyTestaaja() {
-        this.ratkaisija = new MiinaharavanRatkaisija(100, 100);
+    public SuorituskykyTestaaja(int x, int y) {
+        this.ratkaisija = new MiinaharavanRatkaisija(x, y);
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -47,7 +51,7 @@ public class SuorituskykyTestaaja {
      */
     public void ratkaiseKunnesRatkaistu() {
         while (!ratkaistu) {
-            ratkaisija = new MiinaharavanRatkaisija(40, 40);
+            ratkaisija = new MiinaharavanRatkaisija(x, y);
             ratkaise();
             System.out.println("");
             System.out.println("Uusi peli");

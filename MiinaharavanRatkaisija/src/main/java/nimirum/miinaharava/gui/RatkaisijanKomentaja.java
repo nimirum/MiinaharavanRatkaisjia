@@ -33,12 +33,13 @@ public class RatkaisijanKomentaja {
             ekaSiirto();
         } else {
             miinaharavanRatkaisija.ratkaisePelia();
-            boolean siirtoMahdollinen = teeYksiSiirto();
-            if(siirtoMahdollinen){
-                System.out.println("Etsitään 121 ja 1221 ratkaisuja");
-                miinaharavanRatkaisija.etsiLisaaRatkaisuja();
-                teeYksiSiirto();
-            }
+            teeYksiSiirto();
+//            boolean siirtoMahdollinen = teeYksiSiirto();
+//            if (siirtoMahdollinen) {
+//                System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
+//                miinaharavanRatkaisija.etsiLisaaRatkaisuja();
+//                teeYksiSiirto();
+//            }
         }
     }
 
@@ -54,22 +55,33 @@ public class RatkaisijanKomentaja {
     }
 
     private boolean teeYksiSiirto() {
+       // miinaharavanRatkaisija.tulostaTiedot();
         Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
-        boolean pelinRatkaisuJumissa;
+        boolean pelinRatkaisuJumissa = false;
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
             pelinRatkaisuJumissa = false;
-        } else {
-            if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
-                System.out.println("Peli ratkaistu");
+        }
+        if (ruutu == null) {
+            System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
+            miinaharavanRatkaisija.etsiLisaaRatkaisuja();
+            Ruutu ruutuExtra = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
+            if (ruutuExtra != null) {
+                kayttoliittyma.klikkaaRuutua(ruutuExtra);
                 pelinRatkaisuJumissa = false;
             } else {
-                System.out.println("Ei pysty tekemään siirtoja");
-                pelinRatkaisuJumissa = true;
+                if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
+                    System.out.println("Peli ratkaistu");
+                    pelinRatkaisuJumissa = false;
+                } else {
+                    System.out.println("Ei pysty tekemään siirtoja");
+                    pelinRatkaisuJumissa = true;
+                }
+                kayttoliittyma.stop();
+                miinaharavanRatkaisija.tulostaTiedot();
             }
-            kayttoliittyma.stop();
-            // miinaharavanRatkaisija.tulostaTiedot();
         }
         return pelinRatkaisuJumissa;
     }
 }
+

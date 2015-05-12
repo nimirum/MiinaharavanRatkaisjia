@@ -6,7 +6,7 @@ import nimirum.miinaharava.gui.Kayttoliittyma;
 public class Main {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater((Runnable) new Kayttoliittyma());
+        SwingUtilities.invokeLater((Runnable) new Kayttoliittyma(50,40));
 //        SuorituskykyTestaaja katis = new SuorituskykyTestaaja();
 //        katis.ratkaiseKunnesRatkaistu();
 //        

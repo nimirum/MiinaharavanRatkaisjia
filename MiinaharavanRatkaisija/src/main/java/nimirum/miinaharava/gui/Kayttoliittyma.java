@@ -37,6 +37,8 @@ public class Kayttoliittyma implements Runnable {
     private Sijainnit sijainnit;
     private RatkaisijanKomentaja komentaja;
     private Timer timer;
+    private int x;
+    private int y;
 
     /**
      * Kayttoliittyma luo 10x10 kokoisen Miinaharavan pelin
@@ -45,6 +47,18 @@ public class Kayttoliittyma implements Runnable {
      */
     public Kayttoliittyma() {
         MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija();
+        komentaja = new RatkaisijanKomentaja(this, ratkaisija);
+
+        this.miinaharava = ratkaisija.getLauta();
+        ruudunLeveys = miinaharava.getRuutu(0, 0).getRuudunLeveys();
+        ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
+        sijainnit = new Sijainnit(miinaharava, this);
+    }
+    
+        public Kayttoliittyma(int x, int y) {
+        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija(x, y);
+        this.x = x;
+        this.y = y;
         komentaja = new RatkaisijanKomentaja(this, ratkaisija);
 
         this.miinaharava = ratkaisija.getLauta();
@@ -178,7 +192,7 @@ public class Kayttoliittyma implements Runnable {
      * @param y
      */
     public void uusiPeli(int x, int y) {
-        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija();
+        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija(this.x, this.y);
         komentaja = new RatkaisijanKomentaja(this, ratkaisija);
         this.miinaharava = ratkaisija.getLauta();
         sijainnit = new Sijainnit(miinaharava, this);
