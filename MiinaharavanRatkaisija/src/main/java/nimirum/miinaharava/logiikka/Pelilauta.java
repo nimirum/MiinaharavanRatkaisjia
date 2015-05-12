@@ -112,13 +112,16 @@ public class Pelilauta {
     }
 
     public void miinoita(ArrayList<Ruutu> miinat) {
-        if (miinoitettu = false) {
+        if (miinoitettu == false) {
            // for (Ruutu ruutu : miinat) {
              for (int i = 0; i < miinat.size(); i++) {
-                miinat.get(i).setOnkoRuudussaMiina(true);
+               // miinat.get(i).setOnkoRuudussaMiina(true);
+                 getRuutu(miinat.get(i).getX(), miinat.get(i).getY()).setOnkoRuudussaMiina(true);
+                System.out.println("miinoitettu ruutu:" + miinat.get(i).toString());
             }
             miinoitettu = true;
         }
+        laskeNumerot();
     }
 
     public boolean isMiinoitettu() {

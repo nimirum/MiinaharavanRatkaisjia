@@ -82,7 +82,31 @@ public class SuorituskykyTestaaja {
             }
 
         }
-
+//        Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
+//        boolean pelinRatkaisuJumissa = false;
+//        if (ruutu != null) {
+//            kayttoliittyma.klikkaaRuutua(ruutu);
+//            pelinRatkaisuJumissa = false;
+//        }
+//        if (ruutu == null) {
+//            System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
+//            miinaharavanRatkaisija.etsiLisaaRatkaisuja();
+//            Ruutu ruutuExtra = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
+//            if (ruutuExtra != null) {
+//                kayttoliittyma.klikkaaRuutua(ruutuExtra);
+//                pelinRatkaisuJumissa = false;
+//            } else {
+//                if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
+//                    System.out.println("Peli ratkaistu");
+//                    pelinRatkaisuJumissa = false;
+//                } else {
+//                    System.out.println("Ei pysty tekemään siirtoja");
+//                    pelinRatkaisuJumissa = true;
+//                }
+//                kayttoliittyma.stop();
+//                miinaharavanRatkaisija.tulostaTiedot();
+//            }
+//        }
     }
 
     private void klikkausRuutuun(Ruutu ruutu) {

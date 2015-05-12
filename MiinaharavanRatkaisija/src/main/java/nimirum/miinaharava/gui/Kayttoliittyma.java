@@ -196,6 +196,12 @@ public class Kayttoliittyma implements Runnable {
         komentaja = new RatkaisijanKomentaja(this, ratkaisija);
         this.miinaharava = ratkaisija.getLauta();
         sijainnit = new Sijainnit(miinaharava, this);
+        
+        nimirum.miinaharavanratkaisija.dataStructures.ArrayList<Ruutu> miinat = new nimirum.miinaharavanratkaisija.dataStructures.ArrayList(3);
+        miinat.add(new Ruutu(1, 2));
+        miinat.add(new Ruutu(2, 2));
+        miinaharava.miinoita(miinat);
+        
         Container c = frame.getContentPane();
         c.removeAll();
         luoKomponentit(c);
