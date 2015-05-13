@@ -34,12 +34,6 @@ public class RatkaisijanKomentaja {
         } else {
             miinaharavanRatkaisija.ratkaisePelia();
             teeYksiSiirto();
-//            boolean siirtoMahdollinen = teeYksiSiirto();
-//            if (siirtoMahdollinen) {
-//                System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
-//                miinaharavanRatkaisija.etsiLisaaRatkaisuja();
-//                teeYksiSiirto();
-//            }
         }
     }
 
@@ -55,14 +49,13 @@ public class RatkaisijanKomentaja {
     }
 
     private boolean teeYksiSiirto() {
-       // miinaharavanRatkaisija.tulostaTiedot();
         Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
         boolean pelinRatkaisuJumissa = false;
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
             pelinRatkaisuJumissa = false;
         }
-        if (ruutu == null) {
+        else if (ruutu == null) {
             System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
             miinaharavanRatkaisija.etsiLisaaRatkaisuja();
             Ruutu ruutuExtra = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
@@ -78,10 +71,33 @@ public class RatkaisijanKomentaja {
                     pelinRatkaisuJumissa = true;
                 }
                 kayttoliittyma.stop();
-                miinaharavanRatkaisija.tulostaTiedot();
+                miinaharavanRatkaisija.tulostaRatkaisuTiedot();
             }
         }
         return pelinRatkaisuJumissa;
     }
-}
 
+    public void ratkaiseYksiSiirto() {
+
+        // EI TOIMI, menee ikuiseen looppiin parin kutsumiskerran jälkeen.
+//        if (miinaharavanRatkaisija.getLauta().isMiinoitettu() == false) {
+//            ekaSiirto();
+//        } else {
+//            miinaharavanRatkaisija.nollaaJonoSiirroista();
+//            miinaharavanRatkaisija.ratkaisePelia();
+//            while (true) {
+//                Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
+//                // boolean pelinRatkaisuJumissa = false;
+//                System.out.println("loop");
+//                if (ruutu == null) {
+//                    System.out.println("Ei mahdollisia siirtoja");
+//                    break;
+//                }
+//                if (ruutu.getOnkoRuutuAvattu() == false) {
+//                    kayttoliittyma.klikkaaRuutua(ruutu);
+//                    break;
+//                }
+//            }
+//        }
+    }
+}

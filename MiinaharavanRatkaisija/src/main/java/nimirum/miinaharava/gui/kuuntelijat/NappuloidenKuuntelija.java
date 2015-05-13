@@ -36,8 +36,8 @@ public class NappuloidenKuuntelija implements ActionListener {
         if (e.getActionCommand().equals("Ratkaise peli")) {
            kayttoliittyma.ratkaise();
         }
-        if (e.getActionCommand().equals("Ennätykset")) {
-         //   kayttoliittyma.avaaEnnatykset();
+        if (e.getActionCommand().equals("Ratkaise siirto")) {
+           kayttoliittyma.ratkaiseYksiSiirto();
         }
     }
 

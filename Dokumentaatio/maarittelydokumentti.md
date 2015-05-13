@@ -6,7 +6,7 @@ MiinaharavanRatkaisija ratkaisee ohjelmoinnin harjoitustyönä tehdyn Miinaharavan
 Ohjelma generoi itsensä sisällä aina uuden ratkaistavan pelilaudan käynnistettäessä. Pelilautojen luominen on jo valmiiksi aikaisemmasta projektista. Algoritmin pitäisi pystyä ratkaisemaan miinaharava aina kun se on mahdollista, joskus pelilauta generoi kenttiä, joissa on mahdottomia kohtia ratkaista muuten kuin arvaamalla 50% todennäköisyydellä kummassa ruudussa miina on. Miinaharavan ratkaisuun ei pitäisi tarvita kovin montaa tietorakennetta. Ainakin alustavasti ArrayListia ja enimmäkseen taulukoita.
 
 ##Aikavaativuus
-Taulukoita ja ArrayListejä läpi käydessä aikavaativuudet ovat 1-3 silmukan kokoisia eli O(n)-O(n^3). Silmukoita ajetaan jokaisen ruudun läpi joten aikavaativuus riippuu pelilaudan koosta. Pelilauta on kaksiulotteinen, joten lopullinen aikavaativuus on vähintään O(n^2).
+Taulukoita ja ArrayListejä läpikäydessä aikavaativuudet ovat 1-3 silmukan kokoisia eli O(n)-O(n^3). Silmukoita ajetaan jokaisen ruudun läpi joten aikavaativuus riippuu pelilaudan koosta. Pelilauta on kaksiulotteinen, joten lopullinen aikavaativuus on vähintään O(n^2).
 
 ##Lähteet
 

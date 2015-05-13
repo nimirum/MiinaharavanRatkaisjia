@@ -101,7 +101,6 @@ public class Pelilauta {
                 int randomNumY = random.nextInt((maxY - min) + 1) + min;
                 Ruutu ruutu = getRuutu(randomNumX, randomNumY);
                 if (!ruutu.getOnkoRuudussaMiina() && ruutu.getX() != ekaKlikkaus.getX() && ruutu.getY() != ekaKlikkaus.getY() && viereisetRuudutEiMiinoitetaTarkitus(ruutu.getX(), ruutu.getY(), ekaKlikkaus)) {
-                   // System.out.println("Miina: " + randomNumX + ", " + randomNumY);
                     ruutu.setOnkoRuudussaMiina(true);
                     laskuri++;
                 }
@@ -115,9 +114,7 @@ public class Pelilauta {
         if (miinoitettu == false) {
            // for (Ruutu ruutu : miinat) {
              for (int i = 0; i < miinat.size(); i++) {
-               // miinat.get(i).setOnkoRuudussaMiina(true);
                  getRuutu(miinat.get(i).getX(), miinat.get(i).getY()).setOnkoRuudussaMiina(true);
-                System.out.println("miinoitettu ruutu:" + miinat.get(i).toString());
             }
             miinoitettu = true;
         }

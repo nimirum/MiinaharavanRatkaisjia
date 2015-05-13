@@ -158,12 +158,15 @@ public class Kayttoliittyma implements Runnable {
         frame.setJMenuBar(valikko);
 
         JMenuItem uusiPeli = new JMenuItem("Uusi peli");
+        JMenuItem yksiSiirto = new JMenuItem("Ratkaise siirto");
         JMenuItem ratkaise = new JMenuItem("Ratkaise peli");
         valikko.add(uusiPeli);
+        valikko.add(yksiSiirto);
         valikko.add(ratkaise);
         
         NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
         uusiPeli.addActionListener(kuuntelija);
+        yksiSiirto.addActionListener(kuuntelija);
         ratkaise.addActionListener(kuuntelija);
     }
 
@@ -197,10 +200,10 @@ public class Kayttoliittyma implements Runnable {
         this.miinaharava = ratkaisija.getLauta();
         sijainnit = new Sijainnit(miinaharava, this);
         
-        nimirum.miinaharavanratkaisija.dataStructures.ArrayList<Ruutu> miinat = new nimirum.miinaharavanratkaisija.dataStructures.ArrayList(3);
-        miinat.add(new Ruutu(1, 2));
-        miinat.add(new Ruutu(2, 2));
-        miinaharava.miinoita(miinat);
+//        nimirum.miinaharavanratkaisija.dataStructures.ArrayList<Ruutu> miinat = new nimirum.miinaharavanratkaisija.dataStructures.ArrayList(3);
+//        miinat.add(new Ruutu(2, 1));
+//        miinat.add(new Ruutu(2, 2));
+//        miinaharava.miinoita(miinat);
         
         Container c = frame.getContentPane();
         c.removeAll();
@@ -214,6 +217,10 @@ public class Kayttoliittyma implements Runnable {
     public void sulje() {
         frame.setVisible(false);
         frame.dispose();
+    }
+
+    public void ratkaiseYksiSiirto() {
+        komentaja.ratkaiseYksiSiirto();
     }
 
 }

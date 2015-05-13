@@ -17,6 +17,7 @@ public class SuorituskykyTestaaja {
     long start;
     private int x;
     private int y;
+    int ratkaistut = 0;
 
     /**
      * Konstruktori
@@ -43,19 +44,27 @@ public class SuorituskykyTestaaja {
         }
         long elapsedTime = stop - start;
         System.out.println(elapsedTime / 1000000000.0);
-        System.out.println(ratkaisija.laskuri);
+       // System.out.println(ratkaisija.laskuri);
+
+        if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
+            ratkaistut++;
+        }
     }
 
     /**
-     * Ratkaisee pelilautoja, kunnes ratkaisija saa ratkaistua yhden pelilaudan kokonaan.
+     * Ratkaisee pelilautoja, kunnes ratkaisija saa ratkaistua yhden pelilaudan
+     * kokonaan.
      */
     public void ratkaiseKunnesRatkaistu() {
-        while (!ratkaistu) {
+        int i = 0;
+        while (i < 100) {
             ratkaisija = new MiinaharavanRatkaisija(x, y);
             ratkaise();
             System.out.println("");
             System.out.println("Uusi peli");
+            i++;
         }
+        System.out.println("Ratkaistut: " + ratkaistut);
     }
 
     private void ekaSiirto() {
@@ -67,46 +76,42 @@ public class SuorituskykyTestaaja {
     }
 
     private void teeYksiSiirto() {
+//        Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
+//        if (ruutu != null) {
+//            klikkausRuutuun(ruutu);
+//        } else {
+//            ratkaise = false;
+//            stop = System.nanoTime();
+//           // ratkaisija.tulostaTiedot();
+//            if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
+//                System.out.println("Peli ratkaistu");
+//                ratkaistu = true;
+//            } else {
+//                System.out.println("Ei pysty tekemään siirtoja");
+//            }
+//
+//        }
         Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
         if (ruutu != null) {
             klikkausRuutuun(ruutu);
-        } else {
-            ratkaise = false;
-            stop = System.nanoTime();
-           // ratkaisija.tulostaTiedot();
-            if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
-                System.out.println("Peli ratkaistu");
-                ratkaistu = true;
-            } else {
-                System.out.println("Ei pysty tekemään siirtoja");
-            }
-
         }
-//        Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
-//        boolean pelinRatkaisuJumissa = false;
-//        if (ruutu != null) {
-//            kayttoliittyma.klikkaaRuutua(ruutu);
-//            pelinRatkaisuJumissa = false;
-//        }
-//        if (ruutu == null) {
-//            System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
-//            miinaharavanRatkaisija.etsiLisaaRatkaisuja();
-//            Ruutu ruutuExtra = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
-//            if (ruutuExtra != null) {
-//                kayttoliittyma.klikkaaRuutua(ruutuExtra);
-//                pelinRatkaisuJumissa = false;
-//            } else {
-//                if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
-//                    System.out.println("Peli ratkaistu");
-//                    pelinRatkaisuJumissa = false;
-//                } else {
-//                    System.out.println("Ei pysty tekemään siirtoja");
-//                    pelinRatkaisuJumissa = true;
-//                }
-//                kayttoliittyma.stop();
-//                miinaharavanRatkaisija.tulostaTiedot();
-//            }
-//        }
+        if (ruutu == null) {
+            //System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
+            ratkaisija.etsiLisaaRatkaisuja();
+            Ruutu ruutuExtra = ratkaisija.getYksiRatkaistuSiirto();
+            if (ruutuExtra != null) {
+                klikkausRuutuun(ruutuExtra);
+            } else {
+                ratkaise = false;
+                stop = System.nanoTime();
+                if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
+                    System.out.println("Peli ratkaistu");
+                    ratkaistu = true;
+                } else {
+                    System.out.println("Ei pysty tekemään siirtoja");
+                }
+            }
+        }
     }
 
     private void klikkausRuutuun(Ruutu ruutu) {
