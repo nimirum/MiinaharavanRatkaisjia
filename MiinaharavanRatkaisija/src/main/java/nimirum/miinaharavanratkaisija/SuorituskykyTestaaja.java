@@ -4,7 +4,7 @@ import nimirum.miinaharava.logiikka.Pelilauta;
 import nimirum.miinaharava.logiikka.Ruutu;
 
 /**
- * MiinaharavanRatkaisijan nopeuden testausta varten
+ * MiinaharavanRatkaisijan nopeuden ja suorituskyvyn testausta varten
  *
  * @author nimirum
  */
@@ -29,7 +29,7 @@ public class SuorituskykyTestaaja {
     }
 
     /**
-     * Ratkaisee yhden pelilaudan niin pitkälle kuin pystyy
+     * Ratkaisee yhden pelilaudan niin pitkälle kuin mahdollista
      */
     public void ratkaise() {
         ratkaise = true;
@@ -52,10 +52,9 @@ public class SuorituskykyTestaaja {
     }
 
     /**
-     * Ratkaisee pelilautoja, kunnes ratkaisija saa ratkaistua yhden pelilaudan
-     * kokonaan.
+     * Ratkaisee 100kpl pelilautoja, ja tulostaa ratkaistujen pelilautojen määrän
      */
-    public void ratkaiseKunnesRatkaistu() {
+    public void ratkaise100kertaa() {
         int i = 0;
         while (i < 100) {
             ratkaisija = new MiinaharavanRatkaisija(x, y);
@@ -76,21 +75,6 @@ public class SuorituskykyTestaaja {
     }
 
     private void teeYksiSiirto() {
-//        Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
-//        if (ruutu != null) {
-//            klikkausRuutuun(ruutu);
-//        } else {
-//            ratkaise = false;
-//            stop = System.nanoTime();
-//           // ratkaisija.tulostaTiedot();
-//            if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
-//                System.out.println("Peli ratkaistu");
-//                ratkaistu = true;
-//            } else {
-//                System.out.println("Ei pysty tekemään siirtoja");
-//            }
-//
-//        }
         Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
         if (ruutu != null) {
             klikkausRuutuun(ruutu);
@@ -126,11 +110,9 @@ public class SuorituskykyTestaaja {
             }
             if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
                 ratkaistu = true;
-                //System.out.println("Voitto");
             }
             if (ruutu.getOnkoRuudussaMiina()) {
                 ruutu.setKlikattuMiina(true);
-                //   System.out.println("Havio");
             }
         }
     }

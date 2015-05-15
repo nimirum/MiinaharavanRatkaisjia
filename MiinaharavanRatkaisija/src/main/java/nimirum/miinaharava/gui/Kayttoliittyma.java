@@ -46,7 +46,7 @@ public class Kayttoliittyma implements Runnable {
      *
      */
     public Kayttoliittyma() {
-        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija();
+        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija(20,15);
         komentaja = new RatkaisijanKomentaja(this, ratkaisija);
 
         this.miinaharava = ratkaisija.getLauta();

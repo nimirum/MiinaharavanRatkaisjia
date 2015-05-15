@@ -56,7 +56,7 @@ public class RatkaisijanKomentaja {
             pelinRatkaisuJumissa = false;
         }
         else if (ruutu == null) {
-            System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
+           // System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
             miinaharavanRatkaisija.etsiLisaaRatkaisuja();
             Ruutu ruutuExtra = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
             if (ruutuExtra != null) {
@@ -78,26 +78,24 @@ public class RatkaisijanKomentaja {
     }
 
     public void ratkaiseYksiSiirto() {
-
-        // EI TOIMI, menee ikuiseen looppiin parin kutsumiskerran jälkeen.
-//        if (miinaharavanRatkaisija.getLauta().isMiinoitettu() == false) {
-//            ekaSiirto();
-//        } else {
-//            miinaharavanRatkaisija.nollaaJonoSiirroista();
-//            miinaharavanRatkaisija.ratkaisePelia();
-//            while (true) {
-//                Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
-//                // boolean pelinRatkaisuJumissa = false;
-//                System.out.println("loop");
-//                if (ruutu == null) {
-//                    System.out.println("Ei mahdollisia siirtoja");
-//                    break;
-//                }
-//                if (ruutu.getOnkoRuutuAvattu() == false) {
-//                    kayttoliittyma.klikkaaRuutua(ruutu);
-//                    break;
-//                }
-//            }
-//        }
+        if (miinaharavanRatkaisija.getLauta().isMiinoitettu() == false) {
+            ekaSiirto();
+        } else {
+          //  miinaharavanRatkaisija.nollaaJonoSiirroista();
+            miinaharavanRatkaisija.ratkaisePelia();
+            miinaharavanRatkaisija.etsiLisaaRatkaisuja();
+            while (true) {
+                Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
+                // boolean pelinRatkaisuJumissa = false;
+                if (ruutu == null) {
+                    System.out.println("Ei mahdollisia siirtoja");
+                    break;
+                }
+                if (ruutu.getOnkoRuutuAvattu() == false) {
+                    kayttoliittyma.klikkaaRuutua(ruutu);
+                    break;
+                }
+            }
+        }
     }
 }
