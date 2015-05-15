@@ -1,8 +1,8 @@
 package nimirum.miinaharava.gui;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 /**
@@ -32,20 +32,34 @@ public class KuvienLataaja {
      */
     public KuvienLataaja() {
         try {
-            ulkoRuutu = ImageIO.read(new File("graphics/icon24x24.png"));
-            ulkoRuutu = ImageIO.read(new File("graphics/tile24x24.png"));
-            miinaRuutu = ImageIO.read(new File("graphics/mine24x24.png"));
-            miinaRuutuRikki = ImageIO.read(new File("graphics/brokenMine24x24.png"));
-            tyhjaRuutu = ImageIO.read(new File("graphics/empty24x24.png"));
-            liputettuRuutu = ImageIO.read(new File("graphics/flagtile24x24.png"));
-            numeroRuutuYksi = ImageIO.read(new File("graphics/one24x24.png"));
-            numeroRuutuKaksi = ImageIO.read(new File("graphics/two24x24.png"));
-            numeroRuutuKolme = ImageIO.read(new File("graphics/three24x24.png"));
-            numeroRuutuNelja = ImageIO.read(new File("graphics/four24x24.png"));
-            numeroRuutuViisi = ImageIO.read(new File("graphics/five24x24.png"));
-            numeroRuutuKuusi = ImageIO.read(new File("graphics/six24x24.png"));
-            numeroRuutuSeitseman = ImageIO.read(new File("graphics/seven24x24.png"));
-            numeroRuutuKahdeksan = ImageIO.read(new File("graphics/eight24x24.png"));
+            InputStream kuvaIcon = this.getClass().getClassLoader().getResourceAsStream("graphics/tile24x24.png");
+            icon =  ImageIO.read(kuvaIcon);
+            InputStream kuvaRuutu = this.getClass().getClassLoader().getResourceAsStream("graphics/tile24x24.png");
+            ulkoRuutu =  ImageIO.read(kuvaRuutu);
+            InputStream kuvaMiina = this.getClass().getClassLoader().getResourceAsStream("graphics/mine24x24.png");
+            miinaRuutu = ImageIO.read(kuvaMiina);
+            InputStream kuvaMiinaRikki = this.getClass().getClassLoader().getResourceAsStream("graphics/brokenMine24x24.png");
+            miinaRuutuRikki = ImageIO.read(kuvaMiinaRikki);
+            InputStream kuvaTyhja = this.getClass().getClassLoader().getResourceAsStream("graphics/empty24x24.png");
+            tyhjaRuutu = ImageIO.read(kuvaTyhja);
+            InputStream kuvaLippu = this.getClass().getClassLoader().getResourceAsStream("graphics/flagtile24x24.png");
+            liputettuRuutu = ImageIO.read(kuvaLippu);
+            InputStream kuva1 = this.getClass().getClassLoader().getResourceAsStream("graphics/one24x24.png");
+            numeroRuutuYksi = ImageIO.read(kuva1);
+            InputStream kuva2 = this.getClass().getClassLoader().getResourceAsStream("graphics/two24x24.png");
+            numeroRuutuKaksi = ImageIO.read(kuva2);
+            InputStream kuva3 = this.getClass().getClassLoader().getResourceAsStream("graphics/three24x24.png");
+            numeroRuutuKolme = ImageIO.read(kuva3);
+            InputStream kuva4 = this.getClass().getClassLoader().getResourceAsStream("graphics/four24x24.png");
+            numeroRuutuNelja = ImageIO.read(kuva4);
+            InputStream kuva5 = this.getClass().getClassLoader().getResourceAsStream("graphics/five24x24.png");
+            numeroRuutuViisi = ImageIO.read(kuva5);
+            InputStream kuva6 = this.getClass().getClassLoader().getResourceAsStream("graphics/six24x24.png");
+            numeroRuutuKuusi = ImageIO.read(kuva6);
+            InputStream kuva7 = this.getClass().getClassLoader().getResourceAsStream("graphics/seven24x24.png");
+            numeroRuutuSeitseman = ImageIO.read(kuva7);
+            InputStream kuva8 = this.getClass().getClassLoader().getResourceAsStream("graphics/eight24x24.png");
+            numeroRuutuKahdeksan = ImageIO.read(kuva8);
         } catch (IOException ex) {
             System.out.println("Kuvien lataus epäonnistui");
         }
