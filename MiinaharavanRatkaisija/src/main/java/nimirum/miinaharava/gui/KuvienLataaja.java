@@ -28,11 +28,11 @@ public class KuvienLataaja {
     private BufferedImage tyhjaRuutu;
 
     /**
-     * Lataa kaikki ennalta määritellyt kuvat käytettäväksi
+     * Lataa kaikki ennalta mÃ¤Ã¤ritellyt kuvat kÃ¤ytettÃ¤vÃ¤ksi
      */
     public KuvienLataaja() {
         try {
-            InputStream kuvaIcon = this.getClass().getClassLoader().getResourceAsStream("graphics/tile24x24.png");
+            InputStream kuvaIcon = this.getClass().getClassLoader().getResourceAsStream("graphics/icon24x24.png");
             icon =  ImageIO.read(kuvaIcon);
             InputStream kuvaRuutu = this.getClass().getClassLoader().getResourceAsStream("graphics/tile24x24.png");
             ulkoRuutu =  ImageIO.read(kuvaRuutu);
@@ -61,7 +61,7 @@ public class KuvienLataaja {
             InputStream kuva8 = this.getClass().getClassLoader().getResourceAsStream("graphics/eight24x24.png");
             numeroRuutuKahdeksan = ImageIO.read(kuva8);
         } catch (IOException ex) {
-            System.out.println("Kuvien lataus epäonnistui");
+           System.out.println("Kuvien lataus epäonnistui");
         }
     }
 

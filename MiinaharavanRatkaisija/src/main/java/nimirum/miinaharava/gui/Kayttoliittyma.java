@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -46,7 +47,7 @@ public class Kayttoliittyma implements Runnable {
      *
      */
     public Kayttoliittyma() {
-        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija(20,15);
+        MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija(20, 15);
         komentaja = new RatkaisijanKomentaja(this, ratkaisija);
 
         this.miinaharava = ratkaisija.getLauta();
@@ -54,8 +55,8 @@ public class Kayttoliittyma implements Runnable {
         ruudunKorkeus = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
         sijainnit = new Sijainnit(miinaharava, this);
     }
-    
-        public Kayttoliittyma(int x, int y) {
+
+    public Kayttoliittyma(int x, int y) {
         MiinaharavanRatkaisija ratkaisija = new MiinaharavanRatkaisija(x, y);
         this.x = x;
         this.y = y;
@@ -163,7 +164,7 @@ public class Kayttoliittyma implements Runnable {
         valikko.add(uusiPeli);
         valikko.add(yksiSiirto);
         valikko.add(ratkaise);
-        
+
         NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
         uusiPeli.addActionListener(kuuntelija);
         yksiSiirto.addActionListener(kuuntelija);
@@ -181,7 +182,8 @@ public class Kayttoliittyma implements Runnable {
     private void setIconImage() {
         BufferedImage miinaRuutu = null;
         try {
-            miinaRuutu = ImageIO.read(new File("graphics/icon24x24.png"));
+            InputStream kuvaIcon = this.getClass().getClassLoader().getResourceAsStream("graphics/icon24x24.png");
+            miinaRuutu = ImageIO.read(kuvaIcon);
         } catch (IOException ex) {
             System.out.println("Kuvien lataus epäonnistui");
         }
@@ -199,12 +201,11 @@ public class Kayttoliittyma implements Runnable {
         komentaja = new RatkaisijanKomentaja(this, ratkaisija);
         this.miinaharava = ratkaisija.getLauta();
         sijainnit = new Sijainnit(miinaharava, this);
-        
+
 //        nimirum.miinaharavanratkaisija.dataStructures.ArrayList<Ruutu> miinat = new nimirum.miinaharavanratkaisija.dataStructures.ArrayList(3);
-//        miinat.add(new Ruutu(2, 1));
-//        miinat.add(new Ruutu(2, 2));
+//        miinat.add(new Ruutu(0, 0));
+//        miinat.add(new Ruutu(3, 0));
 //        miinaharava.miinoita(miinat);
-        
         Container c = frame.getContentPane();
         c.removeAll();
         luoKomponentit(c);

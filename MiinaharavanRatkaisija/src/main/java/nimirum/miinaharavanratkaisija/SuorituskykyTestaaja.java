@@ -43,7 +43,7 @@ public class SuorituskykyTestaaja {
             }
         }
         long elapsedTime = stop - start;
-        System.out.println(elapsedTime / 1000000000.0);
+      //  System.out.println(elapsedTime / 1000000000.0);
        // System.out.println(ratkaisija.laskuri);
 
         if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
@@ -59,11 +59,14 @@ public class SuorituskykyTestaaja {
         while (i < 100) {
             ratkaisija = new MiinaharavanRatkaisija(x, y);
             ratkaise();
-            System.out.println("");
-            System.out.println("Uusi peli");
+          //  System.out.println("");
+         //   System.out.println("Uusi peli");
             i++;
         }
-        System.out.println("Ratkaistut: " + ratkaistut);
+        System.out.println("----------------");
+        System.out.println("RATKAISTUT: " + ratkaistut);
+        System.out.println("----------------");
+        ratkaistut =0;
     }
 
     private void ekaSiirto() {
@@ -89,10 +92,10 @@ public class SuorituskykyTestaaja {
                 ratkaise = false;
                 stop = System.nanoTime();
                 if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
-                    System.out.println("Peli ratkaistu");
+                  //  System.out.println("Peli ratkaistu");
                     ratkaistu = true;
                 } else {
-                    System.out.println("Ei pysty tekemään siirtoja");
+                    //System.out.println("Ei pysty tekemään siirtoja");
                 }
             }
         }

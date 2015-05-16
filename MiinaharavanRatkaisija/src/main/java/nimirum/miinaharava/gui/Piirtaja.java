@@ -19,20 +19,22 @@ public class Piirtaja extends JPanel {
 
     private final KuvienLataaja kuvat;
     private final Pelilauta miinaharava;
+    private boolean havitty;
 
     Piirtaja(Pelilauta miinaharava) {
         super.setBackground(Color.white);
         this.kuvat = new KuvienLataaja();
+        havitty = false;
         this.miinaharava = miinaharava;
-//        int viive = 1000; //millisekunteja
-//        ActionListener taskPerformer = new ActionListener() {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                repaint();
-//            }
-//        };
-//        new Timer(viive, taskPerformer).start();
+        int viive = 1; //millisekunteja
+        ActionListener taskPerformer = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                repaint();
+            }
+        };
+        new Timer(viive, taskPerformer).start();
     }
 
     @Override
@@ -47,7 +49,7 @@ public class Piirtaja extends JPanel {
      * @param g Graphics
      */
     public void piirraRuudut(Graphics g) {
-        if(miinaharava.onkoPeliPaattynyt()){
+        if (miinaharava.onkoPeliPaattynyt()) {
             piirraGameOver(g, "Voitto");
         }
         int ruudunKoko = miinaharava.getRuutu(0, 0).getRuudunKorkeus();
@@ -56,20 +58,12 @@ public class Piirtaja extends JPanel {
             for (int j = 0; j < miinaharava.getY() * ruudunKoko; j = j + ruudunKoko) {
                 Ruutu ruutu = miinaharava.getRuutu(i / ruudunKoko, j / ruudunKoko);
                 Image kuva = kuvat.getImage("Tile");
-                if (!ruutu.getOnkoRuutuAvattu()) { //ruutu false
-                    if (!ruutu.isOnkoRuutuLiputettu()) {
-
-                    }
-                    if (!ruutu.isOnkoRuutuLiputettu()) {
-                        kuva = kuvat.getImage("Tile");
-                    } else {
-                        kuva = kuvat.getImage("Flag");
-                    }
-                } else { //ruutu true
+                if (ruutu.getOnkoRuutuAvattu()) { //ruutu true
                     if (ruutu.getOnkoRuudussaMiina() && ruutu.isKlikattuMiina()) {
                         kuva = kuvat.getImage("BrokenMine");
                         miinaharava.avaaKaikkiRuudut();
                         piirraGameOver(g, "Havio");
+                        havitty = true;
                     }
                     if (ruutu.getOnkoRuudussaMiina() && !ruutu.isKlikattuMiina()) {
                         kuva = kuvat.getImage("Mine");
@@ -79,6 +73,15 @@ public class Piirtaja extends JPanel {
                     }
                     if (!ruutu.getOnkoRuudussaMiina() && ruutu.getViereistenMiinojenMaara() == 0) {
                         kuva = kuvat.getImage("Empty");
+                    }
+                } else { //ruutu true
+                    if (!ruutu.isOnkoRuutuLiputettu()) {
+
+                    }
+                    if (!ruutu.isOnkoRuutuLiputettu()) {
+                        kuva = kuvat.getImage("Tile");
+                    } else {
+                        kuva = kuvat.getImage("Flag");
                     }
                 }
                 g.drawImage(kuva, i, j, null);
@@ -90,7 +93,7 @@ public class Piirtaja extends JPanel {
         int leveys = (int) (0.3 * miinaharava.getX() * miinaharava.getRuutu(0, 0).getRuudunKorkeus());
         int korkeus = miinaharava.getY() * miinaharava.getRuutu(0, 0).getRuudunKorkeus();
 
-        if (tilanne.equals("Voitto")) {
+        if (tilanne.equals("Voitto") && !havitty) {
             g.drawString("Voitit pelin!", leveys, korkeus + 24);
         }
         if (tilanne.equals("Havio")) {

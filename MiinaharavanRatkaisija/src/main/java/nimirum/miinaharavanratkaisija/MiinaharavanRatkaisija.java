@@ -8,6 +8,7 @@ import nimirum.miinaharavanratkaisija.dataStructures.ArrayList;
 /**
  * MiinaharavanRatkaisija ratkaisee pelilaudan siitä löytyvien tietojen
  * perusteella mikäli mahdollista ilman arvaamista.
+ *
  * @author nimirum
  */
 public class MiinaharavanRatkaisija {
@@ -72,6 +73,7 @@ public class MiinaharavanRatkaisija {
 
     /**
      * Miinaharavan pelilauta
+     *
      * @return Pelilauta
      */
     public Pelilauta getLauta() {
@@ -89,7 +91,8 @@ public class MiinaharavanRatkaisija {
     }
 
     /**
-     * Tulostaa ratkaisijan tiedot joiden perusteella se ratkaisee pelilautaa (debuggausta varten)
+     * Tulostaa ratkaisijan tiedot joiden perusteella se ratkaisee pelilautaa
+     * (debuggausta varten)
      */
     public void tulostaRatkaisuTiedot() {
         System.out.println("----");
@@ -129,8 +132,10 @@ public class MiinaharavanRatkaisija {
     }
 
     /**
-     * Tekee pelilaudan ensimmäisen siirron keskelle lautaa, jotta olisi mahdollisimman suuri todennäköisyys saada iso alue avattua.
-     * Pelilauta miinoitetaan aina ensimmäisen siirron jälkeen
+     * Tekee pelilaudan ensimmäisen siirron keskelle lautaa, jotta olisi
+     * mahdollisimman suuri todennäköisyys saada iso alue avattua. Pelilauta
+     * miinoitetaan aina ensimmäisen siirron jälkeen
+     *
      * @return pelilaudan ensimmäinen siirto
      */
     public Ruutu ensimmainenSiirto() {
@@ -140,7 +145,7 @@ public class MiinaharavanRatkaisija {
         eiLoydettyjenViereistenMiinojenMaara[lauta.getX() / 2][lauta.getY() / 2] = 0;
         return lauta.getRuutu(lauta.getX() / 2, lauta.getY() / 2);
     }
-    
+
     /**
      * Palauttaa jonosta yhden ratkaistun siirron
      *
@@ -285,9 +290,8 @@ public class MiinaharavanRatkaisija {
         viereistenMiinojenMaara[i + 1 * iKasvu][j + 1 * jKasvu] = lauta.getRuutu(i + 1 * iKasvu, j + 1 * jKasvu).getViereistenMiinojenMaara();
         korjaaViereistenRuutujenLoydettyjenMiinojenMaara(i + 0 * iKasvu, j + 0 * jKasvu);
         korjaaViereistenRuutujenLoydettyjenMiinojenMaara(i + 2 * iKasvu, j + 2 * jKasvu);
-        Ruutu ruutu = lauta.getRuutu(i + 1 * iKasvu, j + 1 * jKasvu);
-        jonoSiirrettavista.push(ruutu);
-      //  System.out.println("121 ruutu:" + ruutu.getX() + ", " + ruutu.getY());
+        jonoSiirrettavista.push(lauta.getRuutu(i + 1 * iKasvu, j + 1 * jKasvu));
+        //  System.out.println("121 ruutu:" + ruutu.getX() + ", " + ruutu.getY());
     }
 
     private void tarkistaOnko121(int i, int j) {
@@ -328,11 +332,8 @@ public class MiinaharavanRatkaisija {
         viereistenMiinojenMaara[i + 3 * iKasvu][j + 3 * jKasvu] = lauta.getRuutu(i + 3 * iKasvu, j + 3 * jKasvu).getViereistenMiinojenMaara();
         korjaaViereistenRuutujenLoydettyjenMiinojenMaara(i + 1 * iKasvu, j + 1 * jKasvu);
         korjaaViereistenRuutujenLoydettyjenMiinojenMaara(i + 2 * iKasvu, j + 2 * jKasvu);
-        Ruutu ruutu = lauta.getRuutu(i + 0 * iKasvu, j + 0 * jKasvu);
-        Ruutu ruutu2 = lauta.getRuutu(i + 3 * iKasvu, j + 3 * jKasvu);
-        jonoSiirrettavista.push(ruutu);
-        jonoSiirrettavista.push(ruutu2);
-      //  System.out.println("1221 ruudut: " + ruutu.toString() + " ja " + ruutu2.toString());
+        jonoSiirrettavista.push(lauta.getRuutu(i + 0 * iKasvu, j + 0 * jKasvu));
+        jonoSiirrettavista.push(lauta.getRuutu(i + 3 * iKasvu, j + 3 * jKasvu));
     }
 
     private void tarkistaOnko1221(int i, int j) {
@@ -361,29 +362,67 @@ public class MiinaharavanRatkaisija {
         }
     }
 
-    private void tarkistaOnkoReunassaRatkaistava11(int i, int j) {
-        //Etsii  o o 1 tilanteita
-        //       1 1 ? 
+    private void teeMuutokset11tapatauksessa(int i, int j) {
+       // tulostaRatkaisuTiedot();
+        if (miinat[i][j] == false) {
+            ruudut[i][j] = true;
+            Ruutu ruutu = lauta.getRuutu(i, j);
+            viereistenMiinojenMaara[i][j] = ruutu.getViereistenMiinojenMaara();
+            jonoSiirrettavista.push(ruutu);
+            eiLoydettyjenViereistenMiinojenMaara[ruutu.getX()][ruutu.getY()] = laskeLoytymattomienViereistenMiinojenMaara(ruutu.getX(), ruutu.getY());
+         //   System.out.println("11 ruutu: " + ruutu.toString());
+        }
+        
+    }
 
-        //oikea reuna lauta
-        if (i == lauta.getX() && eiLoydettyjenViereistenMiinojenMaara[i - 1][j] == 1) {
+    private void tarkistaOnkoReunassaRatkaistava11(int i, int j) {
+        //oikea reuna /suunta
+        if (i == lauta.getX() - 1 && eiLoydettyjenViereistenMiinojenMaara[i - 1][j] == 1) {
             // ylöspäin
+           // System.out.println("löyty o");
+            if (j - 1 >= 0 && ruudut[i][j - 1] == false && ruudut[i - 1][j - 1] == false && ruudut[i - 2][j - 1] == false) {
+             //   System.out.println("ylös");
+                teeMuutokset11tapatauksessa(i - 2, j - 1);
+            }
             //alaspäin
+            if (j + 1 < lauta.getY() && ruudut[i][j + 1] == false && ruudut[i - 1][j + 1] == false && ruudut[i - 2][j + 1] == false) {
+                teeMuutokset11tapatauksessa(i - 2, j + 1);
+            }
         }
-        //vasen reuna
+        //vasen reuna / suunta
         if (i == 0 && eiLoydettyjenViereistenMiinojenMaara[i + 1][j] == 1) {
+           // System.out.println("löyty v");
             // ylöspäin
+            if (j - 1 >= 0 && ruudut[i][j - 1] == false && ruudut[i + 1][j - 1] == false && ruudut[i + 2][j - 1] == false) {
+              //  System.out.println("ylös");
+                teeMuutokset11tapatauksessa(i + 2, j - 1);
+            }
             //alaspäin
+            if (j + 1 < lauta.getY() && ruudut[i][j + 1] == false && ruudut[i + 1][j + 1] == false && ruudut[i + 2][j + 1] == false) {
+                teeMuutokset11tapatauksessa(i + 2, j + 1);
+            }
         }
-        //ylhäältä päin alas
+        //ylhäältä alaspäin
         if (j == 0 && eiLoydettyjenViereistenMiinojenMaara[i][j + 1] == 1) {
+            // vasemmalle
+            if (i - 1 >= 0 && ruudut[i - 1][j] == false && ruudut[i - 1][j + 1] == false && ruudut[i - 1][j + 2] == false) {
+                teeMuutokset11tapatauksessa(i - 1, j + 2);
+            }
             //oikealle
-            //vasemmalle
+            if (i + 1 < lauta.getX() && ruudut[i + 1][j] == false && ruudut[i + 1][j + 1] == false && ruudut[i + 1][j + 2] == false) {
+                teeMuutokset11tapatauksessa(i + 1, j + 2);
+            }
         }
-        //alhaaltapäin ylös
-        if (j == lauta.getY() && eiLoydettyjenViereistenMiinojenMaara[i][j - 1] == 1) {
+        //alhaalta ylöspäin
+        if (j == lauta.getY() - 1 && eiLoydettyjenViereistenMiinojenMaara[i][j - 1] == 1) {
+            // vasemmalle
+            if (i - 1 >= 0 && ruudut[i - 1][j] == false && ruudut[i - 1][j - 1] == false && ruudut[i - 1][j - 2] == false) {
+                teeMuutokset11tapatauksessa(i - 1, j - 2);
+            }
             //oikealle
-            //vasemmalle
+            if (i + 1 < lauta.getX() && ruudut[i + 1][j] == false && ruudut[i + 1][j - 1] == false && ruudut[i + 1][j - 2] == false) {
+                teeMuutokset11tapatauksessa(i + 1, j - 2);
+            }
         }
     }
 }

@@ -109,7 +109,6 @@ public class MiinaharavanRatkaisijaTest {
         }
         ratkaisija.paivitaTiedotPelikentasta();
         String[][] tiedot = ratkaisija.ratkaisuTiedotTaulukossa();
-        //ratkaisija.tulostaTiedot();
         lauta.avaaKaikkiRuudut();
         for (int i = 0; i < lauta.getX(); i++) {
             for (int j = 0; j < lauta.getY(); j++) {
@@ -129,7 +128,6 @@ public class MiinaharavanRatkaisijaTest {
     @Test
     public void ratkaisijanToimivuus121tilanteet() {
         ratkaisija = new MiinaharavanRatkaisija(3, 3);
-        // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
         ArrayList<Ruutu> miinat = new ArrayList(2);
         miinat.add(new Ruutu(2, 0));
         miinat.add(new Ruutu(2, 2));
@@ -153,7 +151,6 @@ public class MiinaharavanRatkaisijaTest {
     @Test
     public void ratkaisijanToimivuus1221tilanteet() {
         ratkaisija = new MiinaharavanRatkaisija(3, 4);
-        // Ruutu ekaruutu = ratkaisija.ensimmainenSiirto();
         ArrayList<Ruutu> miinat = new ArrayList(2);
         miinat.add(new Ruutu(2, 1));
         miinat.add(new Ruutu(2, 2));
@@ -174,6 +171,53 @@ public class MiinaharavanRatkaisijaTest {
         }
         assertEquals(lauta.getRuutu(2, 0).getOnkoRuutuAvattu(), true);
         assertEquals(lauta.getRuutu(2, 3).getOnkoRuutuAvattu(), true);
+    }
+
+    @Test
+    public void ratkaisijanToimivuus11TilanneAlaspain() {
+        ratkaisija = new MiinaharavanRatkaisija(5, 3);
+        ArrayList<Ruutu> miinat = new ArrayList(2);
+        miinat.add(new Ruutu(0, 2));
+        miinat.add(new Ruutu(3, 2));
+        Pelilauta lauta = ratkaisija.getLauta();
+        lauta.miinoita(miinat);
+        lauta.klikkausRuutuun(0, 0);
+        ratkaisija.ratkaisePelia();
+
+        while (true) {
+            ratkaisija.etsiLisaaRatkaisuja();
+            Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
+            if (ruutu != null) {
+                lauta.klikkausRuutuun(ruutu.getX(), ruutu.getY());
+                System.out.println(ruutu);
+            } else {
+                break;
+            }
+        }
+        assertEquals(lauta.getRuutu(2, 2).getOnkoRuutuAvattu(), true);
+    }
+       @Test
+    public void ratkaisijanToimivuus11TilanneYlospain() {
+        ratkaisija = new MiinaharavanRatkaisija(5, 3);
+        ArrayList<Ruutu> miinat = new ArrayList(2);
+        miinat.add(new Ruutu(0, 0));
+        miinat.add(new Ruutu(3, 0));
+        Pelilauta lauta = ratkaisija.getLauta();
+        lauta.miinoita(miinat);
+        lauta.klikkausRuutuun(0, 2);
+        ratkaisija.ratkaisePelia();
+
+        while (true) {
+            ratkaisija.etsiLisaaRatkaisuja();
+            Ruutu ruutu = ratkaisija.getYksiRatkaistuSiirto();
+            if (ruutu != null) {
+                lauta.klikkausRuutuun(ruutu.getX(), ruutu.getY());
+                System.out.println(ruutu);
+            } else {
+                break;
+            }
+        }
+        assertEquals(lauta.getRuutu(2, 0).getOnkoRuutuAvattu(), true);
     }
 
 }
