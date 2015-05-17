@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -165,7 +164,7 @@ public class Kayttoliittyma implements Runnable {
             valikko.add(menu);
             NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
             JMenuItem mi;
-            mi = menu.add(new JMenuItem("Uusi Peli"));
+            mi = menu.add(new JMenuItem("Uusi peli"));
             mi.addActionListener(kuuntelija);
             mi = menu.add(new JMenuItem("Muuta kokoa"));
             mi.addActionListener(kuuntelija);
@@ -231,8 +230,8 @@ public class Kayttoliittyma implements Runnable {
         sijainnit = new Sijainnit(miinaharava, this);
 
 //        nimirum.miinaharavanratkaisija.dataStructures.ArrayList<Ruutu> miinat = new nimirum.miinaharavanratkaisija.dataStructures.ArrayList(3);
-//        miinat.add(new Ruutu(0, 0));
-//        miinat.add(new Ruutu(3, 0));
+//        miinat.add(new Ruutu(2, 1));
+//        miinat.add(new Ruutu(2, 2));
 //        miinaharava.miinoita(miinat);
         Container c = frame.getContentPane();
         c.removeAll();

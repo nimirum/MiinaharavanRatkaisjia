@@ -43,7 +43,7 @@ public class SuorituskykyTestaaja {
             }
         }
         long elapsedTime = stop - start;
-      //  System.out.println(elapsedTime / 1000000000.0);
+        System.out.println(elapsedTime / 1000000000.0);
        // System.out.println(ratkaisija.laskuri);
 
         if (ratkaisija.getLauta().onkoPeliPaattynyt()) {
@@ -59,8 +59,8 @@ public class SuorituskykyTestaaja {
         while (i < 100) {
             ratkaisija = new MiinaharavanRatkaisija(x, y);
             ratkaise();
-          //  System.out.println("");
-         //   System.out.println("Uusi peli");
+            System.out.println("");
+            System.out.println("Uusi peli");
             i++;
         }
         System.out.println("----------------");
@@ -84,7 +84,7 @@ public class SuorituskykyTestaaja {
         }
         if (ruutu == null) {
             //System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
-            ratkaisija.etsiLisaaRatkaisuja();
+          //  ratkaisija.etsiLisaaRatkaisuja();
             Ruutu ruutuExtra = ratkaisija.getYksiRatkaistuSiirto();
             if (ruutuExtra != null) {
                 klikkausRuutuun(ruutuExtra);

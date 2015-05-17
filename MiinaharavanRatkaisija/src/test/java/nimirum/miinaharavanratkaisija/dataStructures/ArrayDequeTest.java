@@ -35,7 +35,7 @@ public class ArrayDequeTest {
         assertEquals(0, jono.size());
         jono.push(new Ruutu(1, 1));
         assertEquals(1, jono.size());
-        jono.poll();
+        jono.pollLast();
         assertEquals(0, jono.size());
     }
 
@@ -47,7 +47,7 @@ public class ArrayDequeTest {
         jono.push(new Ruutu(2, 1));
         assertEquals(2, jono.size());
         assertEquals(4, jono.toArray().length);
-        jono.poll();
+        jono.pollLast();
         assertEquals(1, jono.size());
     }
 
@@ -59,8 +59,8 @@ public class ArrayDequeTest {
         jono.push(new Ruutu(2, 1));
         assertEquals(2, jono.size());
         assertEquals(4, jono.toArray().length);
-        jono.poll();
-        jono.poll();
+        jono.pollLast();
+        jono.pollLast();
         assertEquals(0, jono.size());
         jono.push(new Ruutu(1, 1));
         jono.push(new Ruutu(2, 1));
@@ -71,6 +71,6 @@ public class ArrayDequeTest {
     public void vakioKonstrtuktoriToimii(){
           ArrayDeque jono = new ArrayDeque();
           assertEquals(0, jono.size());
-          assertEquals(16, jono.toArray().length);
+          assertEquals(100, jono.toArray().length);
     }
 }

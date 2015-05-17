@@ -29,7 +29,7 @@ public class ArrayDeque{
      * Jono, jonka koko on 16
      */
     public ArrayDeque() {
-        this(16);
+        this(100);
     }
 
     /**
@@ -52,7 +52,7 @@ public class ArrayDeque{
      * Palauttaa jonossa pisimpään olleen jäsenen
      * @return
      */
-    public Ruutu poll() {
+    public Ruutu pollLast() {
         Ruutu result = elements[head];
         if (result == null) {
             return null;
@@ -75,7 +75,7 @@ public class ArrayDeque{
         elements = copy;
 
         head = 0;
-        //tail = size - 1;
+        tail = size;
     }
 
     /**

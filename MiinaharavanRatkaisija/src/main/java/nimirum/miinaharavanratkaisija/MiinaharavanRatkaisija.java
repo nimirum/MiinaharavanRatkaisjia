@@ -1,5 +1,6 @@
 package nimirum.miinaharavanratkaisija;
 
+
 import java.util.ArrayDeque;
 import nimirum.miinaharava.logiikka.Pelilauta;
 import nimirum.miinaharava.logiikka.Ruutu;
