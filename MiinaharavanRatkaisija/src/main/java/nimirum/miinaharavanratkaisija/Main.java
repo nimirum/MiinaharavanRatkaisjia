@@ -9,21 +9,7 @@ public class Main {
           SwingUtilities.invokeLater((Runnable) new Kayttoliittyma(15,15));
 //        SuorituskykyTestaaja katis = new SuorituskykyTestaaja(30, 30);
 //        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//                katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
-//        katis.ratkaise100kertaa();
+
 
     }
 }

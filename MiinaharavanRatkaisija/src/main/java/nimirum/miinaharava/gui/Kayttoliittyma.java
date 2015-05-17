@@ -14,8 +14,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import nimirum.miinaharava.logiikka.Pelilauta;
 import nimirum.miinaharava.logiikka.Ruutu;
@@ -158,17 +160,35 @@ public class Kayttoliittyma implements Runnable {
         JMenuBar valikko = new JMenuBar();
         frame.setJMenuBar(valikko);
 
-        JMenuItem uusiPeli = new JMenuItem("Uusi peli");
-        JMenuItem yksiSiirto = new JMenuItem("Ratkaise siirto");
-        JMenuItem ratkaise = new JMenuItem("Ratkaise peli");
-        valikko.add(uusiPeli);
-        valikko.add(yksiSiirto);
-        valikko.add(ratkaise);
+        if (miinaharava.getX() < 15) {
+            JMenu menu = new JMenu("Menu");
+            valikko.add(menu);
+            NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
+            JMenuItem mi;
+            mi = menu.add(new JMenuItem("Uusi Peli"));
+            mi.addActionListener(kuuntelija);
+            mi = menu.add(new JMenuItem("Muuta kokoa"));
+            mi.addActionListener(kuuntelija);
+            mi = menu.add(new JMenuItem("Ratkaise siirto"));
+            mi.addActionListener(kuuntelija);
+            mi = menu.add(new JMenuItem("Ratkaise peli"));
+            mi.addActionListener(kuuntelija);
+        } else {
+            JMenuItem uusiPeli = new JMenuItem("Uusi peli");
+            JMenuItem koko = new JMenuItem("Muuta kokoa");
+            JMenuItem yksiSiirto = new JMenuItem("Ratkaise siirto");
+            JMenuItem ratkaise = new JMenuItem("Ratkaise peli");
+            valikko.add(uusiPeli);
+            valikko.add(koko);
+            valikko.add(yksiSiirto);
+            valikko.add(ratkaise);
 
-        NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
-        uusiPeli.addActionListener(kuuntelija);
-        yksiSiirto.addActionListener(kuuntelija);
-        ratkaise.addActionListener(kuuntelija);
+            NappuloidenKuuntelija kuuntelija = new NappuloidenKuuntelija(this, miinaharava);
+            uusiPeli.addActionListener(kuuntelija);
+            koko.addActionListener(kuuntelija);
+            yksiSiirto.addActionListener(kuuntelija);
+            ratkaise.addActionListener(kuuntelija);
+        }
     }
 
     /**
@@ -177,6 +197,14 @@ public class Kayttoliittyma implements Runnable {
      */
     public JFrame getFrame() {
         return frame;
+    }
+
+    /**
+     * "Muuta kokoa" nappulan komento joka avaa kokoa kysyvän ikkunan
+     */
+    public void kysyKokoa() {
+        frame.setEnabled(false);
+        SwingUtilities.invokeLater((Runnable) new KoonAsettaminen(miinaharava.getX(), miinaharava.getY(), this));
     }
 
     private void setIconImage() {

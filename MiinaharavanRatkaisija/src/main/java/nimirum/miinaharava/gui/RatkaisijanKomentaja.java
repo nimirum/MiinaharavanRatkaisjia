@@ -1,5 +1,6 @@
 package nimirum.miinaharava.gui;
 
+import javax.swing.JOptionPane;
 import nimirum.miinaharava.logiikka.Ruutu;
 import nimirum.miinaharavanratkaisija.MiinaharavanRatkaisija;
 
@@ -54,9 +55,8 @@ public class RatkaisijanKomentaja {
         if (ruutu != null) {
             kayttoliittyma.klikkaaRuutua(ruutu);
             pelinRatkaisuJumissa = false;
-        }
-        else if (ruutu == null) {
-           // System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
+        } else if (ruutu == null) {
+            // System.out.println("Etsitään 11, 121 ja 1221 ratkaisuja");
             miinaharavanRatkaisija.etsiLisaaRatkaisuja();
             Ruutu ruutuExtra = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
             if (ruutuExtra != null) {
@@ -69,6 +69,7 @@ public class RatkaisijanKomentaja {
                 } else {
                     System.out.println("Ei pysty tekemään siirtoja");
                     pelinRatkaisuJumissa = true;
+                    JOptionPane.showMessageDialog(kayttoliittyma.getFrame(), "Ei enää ratkaistavia siirtoja");
                 }
                 kayttoliittyma.stop();
                 miinaharavanRatkaisija.tulostaRatkaisuTiedot();
@@ -81,15 +82,22 @@ public class RatkaisijanKomentaja {
         if (miinaharavanRatkaisija.getLauta().isMiinoitettu() == false) {
             ekaSiirto();
         } else {
-          //  miinaharavanRatkaisija.nollaaJonoSiirroista();
+            //  miinaharavanRatkaisija.nollaaJonoSiirroista();
             miinaharavanRatkaisija.ratkaisePelia();
             miinaharavanRatkaisija.etsiLisaaRatkaisuja();
             while (true) {
                 Ruutu ruutu = miinaharavanRatkaisija.getYksiRatkaistuSiirto();
                 // boolean pelinRatkaisuJumissa = false;
                 if (ruutu == null) {
-                    System.out.println("Ei mahdollisia siirtoja");
-                    break;
+                    if (miinaharavanRatkaisija.getLauta().onkoPeliPaattynyt()) {
+                        System.out.println("Peli ratkaistu");
+                        kayttoliittyma.stop();
+                        break;
+                    } else {
+                        System.out.println("Ei mahdollisia siirtoja");
+                        JOptionPane.showMessageDialog(kayttoliittyma.getFrame(), "Ei enää ratkaistavia siirtoja");
+                        break;
+                    }
                 }
                 if (ruutu.getOnkoRuutuAvattu() == false) {
                     kayttoliittyma.klikkaaRuutua(ruutu);

@@ -33,11 +33,14 @@ public class NappuloidenKuuntelija implements ActionListener {
             kayttoliittyma.uusiPeli(this.miinaharava.getX(), this.miinaharava.getY());
             System.out.println("Uusi peli");
         }
+        if (e.getActionCommand().equals("Muuta kokoa")) {
+            kayttoliittyma.kysyKokoa();
+        }
         if (e.getActionCommand().equals("Ratkaise peli")) {
-           kayttoliittyma.ratkaise();
+            kayttoliittyma.ratkaise();
         }
         if (e.getActionCommand().equals("Ratkaise siirto")) {
-           kayttoliittyma.ratkaiseYksiSiirto();
+            kayttoliittyma.ratkaiseYksiSiirto();
         }
     }
 
